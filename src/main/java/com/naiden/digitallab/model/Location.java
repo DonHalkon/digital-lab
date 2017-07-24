@@ -3,21 +3,21 @@ package com.naiden.digitallab.model;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "location")
+@Table(name = "locations")
 public class Location {
     @Id
     @Column(name="LOCATION_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @Column(name = "DESCR")
     private String descr;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
