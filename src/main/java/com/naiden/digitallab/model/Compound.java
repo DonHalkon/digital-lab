@@ -6,9 +6,9 @@ import javax.persistence.*;
 @Table(name = "compounds")
 public class Compound {
     @Id
-    @Column(name="role_id")
+    @Column(name="COMPOUND_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Long id;
 
     @Column(name = "CAS")
     private String cas;
@@ -19,11 +19,11 @@ public class Compound {
     @Column(name = "NAME")
     private String name;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

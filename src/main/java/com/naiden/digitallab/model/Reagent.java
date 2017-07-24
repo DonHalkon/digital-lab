@@ -11,11 +11,13 @@ public class Reagent {
     @Column(name = "REAGENT_ID")
     private int id;
 
-    @Column(name="COMPOUND_ID")
-    private int compoundId;
-
-    @Column(name="LOCATION_ID")
-    private int locationId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "COMPOUND_ID")
+    private Compound compound;
+    
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "LOCATION_ID")
+    private Location location;
 
     @Column(name="RECEIPT_DATE")
     private Date receiptDate;
@@ -34,20 +36,20 @@ public class Reagent {
         this.id = id;
     }
 
-    public int getCompoundId() {
-        return compoundId;
+    public Compound getCompound() {
+        return compound;
     }
 
-    public void setCompoundId(int compoundId) {
-        this.compoundId = compoundId;
+    public void setCompound(Compound compound) {
+        this.compound = compound;
     }
 
-    public int getLocationId() {
-        return locationId;
+    public Location getLocation() {
+        return location;
     }
 
-    public void setLocationId(int locationId) {
-        this.locationId = locationId;
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     public Date getReceiptDate() {
