@@ -14,7 +14,7 @@ public class Reagent {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "COMPOUND_ID")
     private Compound compound;
-    
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "LOCATION_ID")
     private Location location;
