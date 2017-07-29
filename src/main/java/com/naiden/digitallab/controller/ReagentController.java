@@ -4,19 +4,20 @@ import com.naiden.digitallab.model.Compound;
 import com.naiden.digitallab.model.Reagent;
 import com.naiden.digitallab.repository.CompoundRepository;
 import com.naiden.digitallab.repository.ReagentRepository;
+import com.naiden.digitallab.service.ReagentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.Map;
 
 @Controller
-@RequestMapping(path="/demo")
-public class MainController {
+@RequestMapping(path="/reagents")
+public class ReagentController {
 
     @Autowired
     private ReagentRepository reagentRepository;
@@ -24,8 +25,8 @@ public class MainController {
     @Autowired
     private CompoundRepository compoundRepository;
 
-    @GetMapping(path="/add_reagent")
-    public @ResponseBody String addNewReagent (@RequestParam String comments, @RequestParam Long compoundId) {
+    @GetMapping(path="/api/add-reagent")
+    public @ResponseBody String addNewReagentApi (@RequestParam String comments, @RequestParam Long compoundId) {
         Reagent reagent = new Reagent();
         reagent.setComments(comments);
         reagent.setReceiptDate(new Date(Calendar.getInstance().getTime().getTime()));
@@ -34,7 +35,7 @@ public class MainController {
         return "Reagent Saved";
     }
 
-    @GetMapping(path="/add_compound")
+    @GetMapping(path="/api/add-compound")
     public @ResponseBody String addNewCompound (@RequestParam String cas, @RequestParam String name) {
         Compound compound = new Compound();
         compound.setCas(cas);
@@ -43,9 +44,29 @@ public class MainController {
         return "Compound Saved";
     }
 
-    @GetMapping(path="/all")
+    @GetMapping(path="/api/get-all")
     public @ResponseBody Iterable<Reagent> getAllReagents() {
         // This returns a JSON or XML with the reagents
         return reagentRepository.findAll();
     }
+
+    @RequestMapping(value = {"", "/", "/main"})
+    public String main(Map<String, Object> model) {
+        Iterable<Reagent> reagents = reagentRepository.findAll();
+        model.put("reagents", reagents);
+        return "main";
+    }
+
+    @RequestMapping("/add-new-reagent")
+    public ModelAndView addNewReagent(){
+        return new ModelAndView("addreagent","command", new Reagent());
+    }
+
+
+    @RequestMapping(value = "/save", method = RequestMethod.POST)
+    public String saveNewReagent(Reagent reagent){
+        reagentRepository.save(reagent);
+        return "redirect:main";
+    }
+
 }
