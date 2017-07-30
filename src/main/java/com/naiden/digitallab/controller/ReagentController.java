@@ -3,16 +3,19 @@ package com.naiden.digitallab.controller;
 import com.naiden.digitallab.model.Compound;
 import com.naiden.digitallab.model.Reagent;
 import com.naiden.digitallab.repository.CompoundRepository;
+import com.naiden.digitallab.repository.LocationRepository;
 import com.naiden.digitallab.repository.ReagentRepository;
 import com.naiden.digitallab.service.ReagentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -24,6 +27,9 @@ public class ReagentController {
 
     @Autowired
     private CompoundRepository compoundRepository;
+
+    @Autowired
+    private LocationRepository locationRepository;
 
     @GetMapping(path="/api/add-reagent")
     public @ResponseBody String addNewReagentApi (@RequestParam String comments, @RequestParam Long compoundId) {
@@ -58,13 +64,16 @@ public class ReagentController {
     }
 
     @RequestMapping("/add-new-reagent")
-    public ModelAndView addNewReagent(){
-        return new ModelAndView("addreagent","command", new Reagent());
+    public ModelAndView addNewReagent(@ModelAttribute("command")  Reagent reagent, BindingResult result){
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put("compounds", compoundRepository.findAll());
+        model.put("locations", locationRepository.findAll());
+        return new ModelAndView("addreagent", model);
     }
 
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveNewReagent(Reagent reagent){
+    public String saveNewReagent(@ModelAttribute("command") Reagent reagent, BindingResult result){
         reagentRepository.save(reagent);
         return "redirect:main";
     }
