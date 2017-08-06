@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping(path="/reagents")
+@RequestMapping(path = "/reagents")
 public class ReagentController {
 
     @Autowired
@@ -31,8 +31,9 @@ public class ReagentController {
     @Autowired
     private LocationRepository locationRepository;
 
-    @GetMapping(path="/api/add-reagent")
-    public @ResponseBody String addNewReagentApi (@RequestParam String comments, @RequestParam Long compoundId) {
+    @GetMapping(path = "/api/add-reagent")
+    public @ResponseBody
+    String addNewReagentApi(@RequestParam String comments, @RequestParam Long compoundId) {
         Reagent reagent = new Reagent();
         reagent.setComments(comments);
         reagent.setReceiptDate(new Date(Calendar.getInstance().getTime().getTime()));
@@ -41,8 +42,9 @@ public class ReagentController {
         return "Reagent Saved";
     }
 
-    @GetMapping(path="/api/add-compound")
-    public @ResponseBody String addNewCompound (@RequestParam String cas, @RequestParam String name) {
+    @GetMapping(path = "/api/add-compound")
+    public @ResponseBody
+    String addNewCompound(@RequestParam String cas, @RequestParam String name) {
         Compound compound = new Compound();
         compound.setCas(cas);
         compound.setName(name);
@@ -50,9 +52,9 @@ public class ReagentController {
         return "Compound Saved";
     }
 
-    @GetMapping(path="/api/get-all")
-    public @ResponseBody Iterable<Reagent> getAllReagents() {
-        // This returns a JSON or XML with the reagents
+    @GetMapping(path = "/api/get-all")
+    public @ResponseBody
+    Iterable<Reagent> getAllReagents() {
         return reagentRepository.findAll();
     }
 
@@ -64,8 +66,9 @@ public class ReagentController {
     }
 
     @RequestMapping("/add-new-reagent")
-    public ModelAndView addNewReagent(@ModelAttribute("command")  Reagent reagent, BindingResult result){
-        Map<String, Object> model = new HashMap<String, Object>();
+    public ModelAndView addNewReagent() {
+        Map<String, Object> model = new HashMap<>();
+        model.put("reagent", new Reagent());
         model.put("compounds", compoundRepository.findAll());
         model.put("locations", locationRepository.findAll());
         return new ModelAndView("addreagent", model);
@@ -73,7 +76,7 @@ public class ReagentController {
 
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveNewReagent(@ModelAttribute("command") Reagent reagent, BindingResult result){
+    public String saveNewReagent(@ModelAttribute("command") Reagent reagent, BindingResult result) {
         reagentRepository.save(reagent);
         return "redirect:main";
     }
