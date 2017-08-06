@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Add reagent</title>
+</head>
+<body>
+<center>
+    <h2>Create New Reagent</h2>
+    <form method="POST" action="save" th:object="${reagent}">
+        <table>
+            <tr>
+                <td><label>receiptDate:</label></td>
+                <td><input th:field="*{receiptDate}"/></td>
+            </tr>
+            <tr>
+                <td>
+                    <label>compound:</label>
+                </td>
+                <td>
+                    <select th:field="*{compound}">
+                        <option value="-1">Select a compound</option>
+                        <option th:each="compound : ${compounds}"
+                                th:value="${compound.id}"
+                                th:text="${compound.name}">Select a compound
+                        </option>
+                    </select>
+                </td>
+
+            </tr>
+            <tr>
+                <td>
+                    <label>location:</label>
+                </td>
+                <td>
+                    <select th:field="*{location}">
+                        <option value="-1">Select a location</option>
+                        <option th:each="location : ${locations}"
+                                th:value="${location.id}"
+                                th:text="${location.descr}">${location.descr}
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><label>comments:</label></td>
+                <td><input th:field="*{comments}"/></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><input type="submit" value="SAVE"/></td>
+            </tr>
+        </table>
+    </form>
+    <a href="/reagents/main" class="btn btn-success">Back</a>
+</center>
+</body>
+</html>

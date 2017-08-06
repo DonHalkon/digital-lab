@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Add location</title>
+</head>
+<body>
+<center>
+    <h2>Create New Location</h2>
+
+    <form action="save" method="post" th:object="${location}">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th>description</th>
+                <td><input name="descr"/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Add location" class="btn btn-success"/></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <a href="/reagents/main" class="btn btn-success">Back</a>
+</center>
+</body>
+</html>

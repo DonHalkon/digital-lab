@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>Add compound</title>
+</head>
+<body>
+<center>
+    <h2>Create New Compound</h2>
+
+    <form action="save" method="post" th:object="${compound}">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th>cas</th>
+                <td><input name="cas"/></td>
+            </tr>
+            <tr>
+                <th>smiles</th>
+                <td><input type="text" name="smiles"/></td>
+            </tr>
+            <tr>
+                <th>name</th>
+                <td><input type="text" name="name"/></td>
+            </tr>
+            <tr>
+                <td colspan="2"><input type="submit" value="Add compound" class="btn btn-success"/></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <a href="/reagents/main" class="btn btn-success">Back</a>
+</center>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="/reagents/add-new-reagent">add new reagent</a></li>
+                <li class="active"><a href="/locations/add-new-location">add new location</a></li>
+                <li class="active"><a href="/compounds/add-new-compound">add new compound</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<table style="width:100%">
+    <tr>
+        <th>id</th>
+        <th>compound</th>
+        <th>location</th>
+        <th>receiptDate</th>
+        <th>storageLife</th>
+        <th>comments</th>
+    </tr>
+
+    <tr th:each="reagent : ${reagents}">
+        <td th:text="${reagent.id}">1</td>
+        <td th:text="${reagent.compound.getId()}">1</td>
+        <td th:text="${reagent.location.getId()}">1</td>
+        <td th:text="${reagent.receiptDate}">1</td>
+        <td th:text="${reagent.storageLife}">1</td>
+        <td th:text="${reagent.comments}">1</td>
+    </tr>
+
+</table>
+</body>
+</html>
