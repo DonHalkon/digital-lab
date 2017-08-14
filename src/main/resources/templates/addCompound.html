@@ -5,6 +5,23 @@
 
 <head>
     <title>Add compound</title>
+
+    <th:block layout:fragment="script">
+        <script type="text/javascript" language="javascript" src="/js/jsme/jsme.nocache.js"></script>
+
+        <script>
+            //this function will be called after the JavaScriptApplet code has been loaded.
+            function jsmeOnLoad() {
+                jsmeApplet = new JSApplet.JSME("jsme_container", "640px", "480px");
+            }
+
+          	function getSmiles() {
+	   	        var data = document.JME.smiles();
+		        document.getElementById("smiles_input").value = data;
+	        }
+
+        </script>
+    </th:block>
 </head>
 <body>
 <center>
@@ -19,7 +36,8 @@
             </tr>
             <tr>
                 <th>smiles</th>
-                <td><input type="text" name="smiles"/></td>
+                <td><input type="text" name="smiles"  id="smiles_input"/></td>
+                <td><button type="button" onclick='getSmiles();'>Get smiles</button></td>
             </tr>
             <tr>
                 <th>name</th>
@@ -31,70 +49,8 @@
             </tbody>
         </table>
 
-        <link rel="stylesheet" th:href="@{/css/ChemDoodleWeb.css}" href="/css/ChemDoodleWeb.css" type="text/css"/>
-        <link rel="stylesheet" th:href="@{/css/jquery-ui-1.11.4.css}" href="/css/jquery-ui-1.11.4.css" type="text/css"/>
-
-        <th:block layout:fragment="script">
-
-            <script type="text/javascript" th:href="@{/js/CChemDoodleWeb.js}"
-                    th:src="@{/js/ChemDoodleWeb.js}" src="/js/ChemDoodleWeb.js"
-                    th:inline="javascript"></script>
-
-            <script type="text/javascript" th:href="@{/js/CChemDoodleWeb-uis.js}"
-                    th:src="@{/js/ChemDoodleWeb-uis.js}" src="/js/ChemDoodleWeb-uis.js"
-                    th:inline="javascript"></script>
-            <script>
-
-                // changes the default JMol color of hydrogen to black so it appears on white backgrounds
-                ChemDoodle.ELEMENT['H'].jmolColor = 'black';
-                // darkens the default JMol color of sulfur so it appears on white backgrounds
-                ChemDoodle.ELEMENT['S'].jmolColor = '#B9A130';
-                // initializes the SketcherCanvas
-                var sketcher = new ChemDoodle.SketcherCanvas('sketcher', 500, 300, {useServices:true, oneMolecule:false});
-                // sets terminal carbon labels to display
-                sketcher.specs.atoms_displayTerminalCarbonLabels_2D = true;
-                // sets atom labels to be colored by JMol colors, which are easy to recognize
-                sketcher.specs.atoms_useJMOLColors = true;
-                // enables overlap clear widths, so that some depth is introduced to overlapping bonds
-                sketcher.specs.bonds_clearOverlaps_2D = true;
-                // sets the shape color to improve contrast when drawing figures
-                sketcher.specs.shapes_color = 'c10000';
-                // because we do not load any content, we need to repaint the sketcher, otherwise we would just see an empty area with the toolbar
-                // however, you can instead use one of the Canvas.load... functions to pre-populate the canvas with content, then you don't need to call repaint
-                sketcher.repaint();
-            </script>
-        </th:block>
-
-        <!--<th:block layout:fragment="script">-->
-
-            <!--<script type="text/javascript" th:href="@{/js/CChemDoodleWeb.js}"-->
-                    <!--th:src="@{/js/ChemDoodleWeb.js}" src="/js/ChemDoodleWeb.js"-->
-                    <!--th:inline="javascript"></script>-->
-
-            <!--<script type="text/javascript" th:href="@{/js/CChemDoodleWeb-uis.js}"-->
-                    <!--th:src="@{/js/ChemDoodleWeb-uis.js}" src="/js/ChemDoodleWeb-uis.js"-->
-                    <!--th:inline="javascript"></script>-->
-            <!--<script>-->
-
-                <!--// changes the default JMol color of hydrogen to black so it appears on white backgrounds-->
-                <!--ChemDoodle.ELEMENT['H'].jmolColor = 'black';-->
-                <!--// darkens the default JMol color of sulfur so it appears on white backgrounds-->
-                <!--ChemDoodle.ELEMENT['S'].jmolColor = '#B9A130';-->
-                <!--// initializes the SketcherCanvas-->
-                <!--var sketcher = new ChemDoodle.SketcherCanvas('sketcher', 500, 300, {useServices:true, oneMolecule:false});-->
-                <!--// sets terminal carbon labels to display-->
-                <!--sketcher.specs.atoms_displayTerminalCarbonLabels_2D = true;-->
-                <!--// sets atom labels to be colored by JMol colors, which are easy to recognize-->
-                <!--sketcher.specs.atoms_useJMOLColors = true;-->
-                <!--// enables overlap clear widths, so that some depth is introduced to overlapping bonds-->
-                <!--sketcher.specs.bonds_clearOverlaps_2D = true;-->
-                <!--// sets the shape color to improve contrast when drawing figures-->
-                <!--sketcher.specs.shapes_color = 'c10000';-->
-                <!--// because we do not load any content, we need to repaint the sketcher, otherwise we would just see an empty area with the toolbar-->
-                <!--// however, you can instead use one of the Canvas.load... functions to pre-populate the canvas with content, then you don't need to call repaint-->
-                <!--sketcher.repaint();-->
-            <!--</script>-->
-        <!--</th:block>-->
+        <div code="JME.class" name="JME" archive="JME.jar" width="640" height="480" id="JME">
+            You have to enable JavaScript in your browser to use JSME! </div>
 
     </form>
     <a href="/reagents/main" class="btn btn-success">Back</a>
