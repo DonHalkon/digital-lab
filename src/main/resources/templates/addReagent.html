@@ -10,9 +10,15 @@
     <form method="POST" action="save" th:object="${reagent}">
         <table>
             <tr>
-                <td><label>receiptDate:</label></td>
-                <td><input th:field="*{receiptDate}"/></td>
+                <td><label>Receipt date:</label></td>
+                <td><input type="date"  th:field="*{receiptDate}" th:value="${#dates.createNow()}"/> </td>
             </tr>
+
+            <tr>
+                <td><label>Storage life:</label></td>
+                <td><input type="date"  th:field="*{storageLife}" th:value="${#dates.createNow()}"/> </td>
+            </tr>
+
             <tr>
                 <td>
                     <label>compound:</label>

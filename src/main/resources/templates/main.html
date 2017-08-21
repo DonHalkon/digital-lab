@@ -16,20 +16,22 @@
 <table style="width:100%">
     <tr>
         <th>id</th>
-        <th>compound</th>
-        <th>location</th>
-        <th>receiptDate</th>
-        <th>storageLife</th>
-        <th>comments</th>
+        <!--<th>Compound</th>-->
+        <th>Compound Name</th>
+        <th>Location</th>
+        <th>Receipt Date</th>
+        <th>Storage Life</th>
+        <th>Comments</th>
     </tr>
 
     <tr th:each="reagent : ${reagents}">
-        <td th:text="${reagent.id}">1</td>
-        <td th:text="${reagent.compound.getId()}">1</td>
-        <td th:text="${reagent.location.getId()}">1</td>
-        <td th:text="${reagent.receiptDate}">1</td>
-        <td th:text="${reagent.storageLife}">1</td>
-        <td th:text="${reagent.comments}">1</td>
+        <td th:text="${reagent.id}" align="center">1</td>
+        <!--<td th:text="${reagent.compound.getId()}">1</td>-->
+        <td th:text="${reagent.compound.getName()}" align="center">1</td>
+        <td th:text="${reagent.location.getId()}" align="center">1</td>
+        <td th:text="${reagent.receiptDate}" align="center">1</td>
+        <td th:text="${reagent.storageLife}" align="center">1</td>
+        <td th:text="${reagent.comments}" align="center">1</td>
     </tr>
 
 </table>
