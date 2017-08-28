@@ -1,5 +1,7 @@
 package com.naiden.digitallab.ui.vaadin.creationalviews;
 
+import com.naiden.digitallab.js.components.JSME;
+import com.naiden.digitallab.js.components.JsLabel;
 import com.naiden.digitallab.model.Compound;
 import com.naiden.digitallab.repository.CompoundRepository;
 import com.naiden.digitallab.ui.vaadin.CompoundsView;
@@ -55,6 +57,9 @@ public class CreateNewCompoundView extends HorizontalLayout implements View {
         leftPanel.addComponent(smilesField);
         leftPanel.addComponent(saveButton);
 
+//        JSME jsme = new JSME();
+        JsLabel jsLabel = new JsLabel("haha");
+
 
 //        JavaScript.getCurrent().addFunction("jsme.jsme.nocache.jsme",
 //                new JavaScriptFunction() {
@@ -64,10 +69,10 @@ public class CreateNewCompoundView extends HorizontalLayout implements View {
 //                    }
 //                });
 
-        Link link = new Link("Send Message", new ExternalResource(
-                "javascript:jsme.jsme.nocache.jsme()"));
+//        Link link = new Link("Send Message", new ExternalResource(
+//                "javascript:jsme.jsme.nocache.jsme()"));
         VerticalLayout rightPanel = new VerticalLayout();
-        rightPanel.addComponent(link);
+        rightPanel.addComponent(jsLabel);
         addComponent(rightPanel);
 
 
