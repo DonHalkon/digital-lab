@@ -42,15 +42,16 @@ public class ReagentController {
         return "Reagent Saved";
     }
 
-    @GetMapping(path = "/api/add-compound")
-    public @ResponseBody
-    String addNewCompound(@RequestParam String cas, @RequestParam String name) {
-        Compound compound = new Compound();
-        compound.setCas(cas);
-        compound.setName(name);
-        compoundRepository.save(compound);
-        return "Compound Saved";
-    }
+    // FIXME: temporary disabled
+//    @GetMapping(path = "/api/add-compound")
+//    public @ResponseBody
+//    String addNewCompound(@RequestParam String cas, @RequestParam String name) {
+//        Compound compound = new Compound();
+//        compound.setCas(cas);
+//        compound.setName(name);
+//        compoundRepository.save(compound);
+//        return "Compound Saved";
+//    }
 
     @GetMapping(path = "/api/get-all")
     public @ResponseBody

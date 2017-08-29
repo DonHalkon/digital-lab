@@ -28,7 +28,7 @@
                         <option value="-1">Select a compound</option>
                         <option th:each="compound : ${compounds}"
                                 th:value="${compound.id}"
-                                th:text="${compound.name}">Select a compound
+                                th:text="${compound.shortName}">Select a compound
                         </option>
                     </select>
                 </div>

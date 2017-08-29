@@ -36,6 +36,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.openscience.cdk/cdk-smiles
 //	compile group: 'org.openscience.cdk', name: 'CDK', version: '2.0'
 
+// https://mvnrepository.com/artifact/org.json/json
+    compile group: 'org.json', name: 'json', version: '20170516'
+
 
 	runtime('mysql:mysql-connector-java')
 //	testCompile('org.springframework.boot:spring-boot-starter-test')

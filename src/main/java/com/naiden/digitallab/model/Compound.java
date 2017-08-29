@@ -10,14 +10,17 @@ public class Compound {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "CAS")
-    private String cas;
+    @Column(name = "CID")
+    private String cid;
 
     @Column(name = "SMILES")
     private String smiles;
 
-    @Column(name = "NAME")
-    private String name;
+    @Column(name = "SHORT_NAME")
+    private String shortName;
+
+    @Column(name = "iupacName")
+    private String iupacName;
 
     public Long getId() {
         return id;
@@ -25,14 +28,6 @@ public class Compound {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getCas() {
-        return cas;
-    }
-
-    public void setCas(String cas) {
-        this.cas = cas;
     }
 
     public String getSmiles() {
@@ -43,11 +38,27 @@ public class Compound {
         this.smiles = smiles;
     }
 
-    public String getName() {
-        return name;
+    public String getCid() {
+        return cid;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCid(String cid) {
+        this.cid = cid;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
+
+    public String getIupacName() {
+        return iupacName;
+    }
+
+    public void setIupacName(String iupacName) {
+        this.iupacName = iupacName;
     }
 }

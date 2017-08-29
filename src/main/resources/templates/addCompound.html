@@ -14,12 +14,16 @@
          //this function will be called after the JavaScriptApplet code has been loaded.
             function jsmeOnLoad() {
                  jsmeApplet = new JSApplet.JSME("jsme_container", "640px", "480px");
+                 jsmeApplet.setNotifyStructuralChangeJSfunction("show_smiles");
             }
 
-          	function getSmiles() {
+          	function show_smiles() {
 	   	        var data = jsmeApplet.smiles();
 		        document.getElementById("smiles_input").value = data;
 	        }
+
+
+
 
         </script>
     </th:block>
@@ -30,26 +34,37 @@
 <h2>Create New Compound</h2>
 
 <div>
-    <form action="save" method="post" th:object="${compound}">
+    <form action="#" method="post" th:object="${compound}">
         <table class="table table-bordered">
             <tbody>
             <tr>
-                <th>CAS: </th>
-                <td><input name="cas"/></td>
+                <th>CID:</th>
+                <td><input name="cid" th:field="*{cid}"/></td>
             </tr>
             <tr>
-                <th>SMILES: </th>
-                <td><input name="smiles" class="disabled" id="smiles_input"/></td>
+                <!--<form action="find-by-smiles" th:object="${compound}" method="post">-->
+                <!--<input type="hidden" th:field="${id}" />-->
+
+                <th>SMILES:</th>
                 <td>
-                    <button type="button" onclick='getSmiles();'>Get smiles</button>
+                        <textarea class="form-control" rows="3" th:field="*{smiles}" id="smiles_input" readonly="true"></textarea>
+                    <button name="action" value="find-by-smiles" class="btn btn-success">Find</button>
                 </td>
+
+                <!--</form>-->
             </tr>
             <tr>
-                <th>Name: </th>
-                <td><input name="name"/></td>
+                <th>Short Name:</th>
+                <td><input name="name" th:field="*{shortName}"/></td>
             </tr>
             <tr>
-                <td colspan="2"><input type="submit" value="Add compound" class="btn btn-success"/></td>
+                <th>IUPAC Name:</th>
+                <td><input name="IUPAC Name" th:field="*{iupacName}"/></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button name="action" value="save" class="btn btn-success">Save</button>
+                </td>
             </tr>
             </tbody>
         </table>
