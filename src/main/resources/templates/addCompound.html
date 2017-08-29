@@ -20,9 +20,8 @@
           	function show_smiles() {
 	   	        var data = jsmeApplet.smiles();
 		        document.getElementById("smiles_input").value = data;
+
 	        }
-
-
 
 
         </script>
@@ -47,8 +46,10 @@
 
                 <th>SMILES:</th>
                 <td>
-                        <textarea class="form-control" rows="3" th:field="*{smiles}" id="smiles_input" readonly="true"></textarea>
+                    <textarea class="form-control" rows="3" th:field="*{smiles}" id="smiles_input"
+                              readonly="true"></textarea>
                     <button name="action" value="find-by-smiles" class="btn btn-success">Find</button>
+                    <!--<input type="button" value="Transfer to editor" onClick="toEditor()"/>-->
                 </td>
 
                 <!--</form>-->

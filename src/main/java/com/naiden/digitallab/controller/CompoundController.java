@@ -14,10 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -52,33 +49,39 @@ public class CompoundController {
     public ModelAndView findBySmiles(Compound compound) throws IOException {
 
         String smiles = compound.getSmiles();
+        compound = new Compound();
+        compound.setSmiles(smiles);
+        smiles = URLEncoder.encode(smiles, "UTF-8");
 
         String requestURL = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/smiles/" + smiles +"/property/IUPACName,MolecularFormula/JSON";
 
-        URL obj = new URL(requestURL);
-        HttpURLConnection connection = (HttpURLConnection) obj.openConnection();
+        URL url = new URL(requestURL);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         connection.setRequestMethod("GET");
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String inputLine;
-        StringBuffer response = new StringBuffer();
+        if (200 == connection.getResponseCode()){
 
-        while ((inputLine = in.readLine()) != null) {
-            response.append(inputLine);
-        }
-        in.close();
+            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String inputLine;
+            StringBuilder response = new StringBuilder();
 
+            while ((inputLine = in.readLine()) != null) {
+                response.append(inputLine);
+            }
+            in.close();
 
-        JSONObject json = new JSONObject(response.toString());
+            JSONObject json = new JSONObject(response.toString());
 
-        JSONArray jsonArray = json.getJSONObject("PropertyTable").getJSONArray("Properties");
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject o = jsonArray.getJSONObject(i);
-            compound.setCid(o.get("CID").toString());
+            JSONArray jsonArray = json.getJSONObject("PropertyTable").getJSONArray("Properties");
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject o = jsonArray.getJSONObject(i);
+                compound.setCid(o.get("CID").toString());
 //            compound.setCid(o.getString("MolecularFormula");
-            compound.setIupacName(o.get("IUPACName").toString());
+                compound.setIupacName(o.get("IUPACName").toString());
+            }
         }
+
 
         Map<String, Object> model = new HashMap<>();
         model.put("compound", compound);
