@@ -1,27 +1,39 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      >
 
 <head>
     <title>Add location</title>
+    <meta charset="utf-8"/>
+    <!--<title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Task List</title>-->
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1" />-->
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+
 </head>
 <body>
-<center>
-    <h2>Create New Location</h2>
+<div th:replace="fragments/header :: header">
 
-    <form action="save" method="post" th:object="${location}">
-        <table class="table table-bordered">
-            <tbody>
-            <tr>
-                <th>description</th>
-                <td><input name="descr"/></td>
-            </tr>
-            <tr>
-                <td colspan="2"><input type="submit" value="Add location" class="btn btn-success"/></td>
-            </tr>
-            </tbody>
-        </table>
-    </form>
-    <a href="/reagents/main" class="btn btn-success">Back</a>
-</center>
+</div>
+<div layout:fragment="content">
+    <!--<center>-->
+        <h2>Create New Location</h2>
+
+        <form action="save" method="post" th:object="${location}">
+            <table class="table table-bordered">
+                <tbody>
+                <tr>
+                    <th>description</th>
+                    <td><input name="descr"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="submit" value="Add location" class="btn btn-success"/></td>
+                </tr>
+                </tbody>
+            </table>
+        </form>
+        <a href="/reagents/main" class="btn btn-success">Back</a>
+    <!--</center>-->
+</div>
 </body>
 </html>

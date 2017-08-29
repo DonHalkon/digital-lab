@@ -2,46 +2,51 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
-
 <head>
     <title>Add compound</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
 
     <th:block layout:fragment="script">
         <script type="text/javascript" language="javascript" src="/js/jsme/jsme.nocache.js"></script>
 
         <script>
-            //this function will be called after the JavaScriptApplet code has been loaded.
+         //this function will be called after the JavaScriptApplet code has been loaded.
             function jsmeOnLoad() {
-                jsmeApplet = new JSApplet.JSME("jsme_container", "640px", "480px");
+                 jsmeApplet = new JSApplet.JSME("jsme_container", "640px", "480px");
             }
 
           	function getSmiles() {
-	   	        var data = document.JME.smiles();
+	   	        var data = jsmeApplet.smiles();
 		        document.getElementById("smiles_input").value = data;
 	        }
 
         </script>
     </th:block>
 </head>
-<body>
-<center>
-    <h2>Create New Compound</h2>
 
+<body>
+<div th:replace="fragments/header :: header"/>
+<h2>Create New Compound</h2>
+
+<div>
     <form action="save" method="post" th:object="${compound}">
         <table class="table table-bordered">
             <tbody>
             <tr>
-                <th>cas</th>
+                <th>CAS: </th>
                 <td><input name="cas"/></td>
             </tr>
             <tr>
-                <th>smiles</th>
-                <td><input type="text" name="smiles"  id="smiles_input"/></td>
-                <td><button type="button" onclick='getSmiles();'>Get smiles</button></td>
+                <th>SMILES: </th>
+                <td><input name="smiles" class="disabled" id="smiles_input"/></td>
+                <td>
+                    <button type="button" onclick='getSmiles();'>Get smiles</button>
+                </td>
             </tr>
             <tr>
-                <th>name</th>
-                <td><input type="text" name="name"/></td>
+                <th>Name: </th>
+                <td><input name="name"/></td>
             </tr>
             <tr>
                 <td colspan="2"><input type="submit" value="Add compound" class="btn btn-success"/></td>
@@ -49,12 +54,10 @@
             </tbody>
         </table>
 
-        <div code="JME.class" name="JME" archive="JME.jar" width="640" height="480" id="JME">
-            You have to enable JavaScript in your browser to use JSME! </div>
+        <div id="jsme_container"></div>
 
     </form>
     <a href="/reagents/main" class="btn btn-success">Back</a>
-
-</center>
+</div>
 </body>
 </html>

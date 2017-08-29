@@ -1,11 +1,19 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Welcome to the Digital Lab</title>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
 </head>
 <body>
-<h1>Welcome to the digital lab!</h1>
 
-<p>Click <a href="@{/reagents}">here</a> to see a all reagents list.</p>
+<div th:replace="fragments/header :: header"/>
+
+<center>
+    <h1>Welcome to the digital lab!</h1>
+</center>
+
+<p>Click <a href="/reagents">here</a> to see a all reagents list.</p>
 </body>
 </html>
