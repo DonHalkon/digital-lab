@@ -17,6 +17,7 @@
                  $('#table').DataTable();
             } );
         </script>
+        <script type="text/javascript" language="javascript" src="/js/jsme/jsme.nocache.js"></script>
     </th:block>
 </head>
 <body>
@@ -41,7 +42,13 @@
             <td th:text="${compound.shortName}">1</td>
             <td th:text="${compound.iupacName}">1</td>
             <td th:text="${compound.getFormula()}">1</td>
-            <td th:text="${compound.smiles}">1</td>
+            <!--<td th:text="${compound.smiles}">1</td>-->
+            <td>
+                <div code="JME.class" name="JME" archive="JME.jar" width="120" height="80" id="JME">
+                    <param name="options" value="depict,useopenchemlib"/>
+                    <param name="smiles" th:value="${compound.smiles}"/>
+                </div>
+            </td>
             <td th:text="${compound.cid}">1</td>
             <td>empty</td>
         </tr>
