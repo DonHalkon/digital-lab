@@ -14,20 +14,24 @@
         <thead>
         <tr>
             <th>id</th>
-            <th>compound</th>
-            <th>location</th>
-            <th>receiptDate</th>
-            <th>storageLife</th>
+            <th>Compound</th>
+            <th>UIPAC Name</th>
+            <th>Molecular Formula</th>
+            <th>Location</th>
+            <th>Receipt Date</th>
+            <!--<th>storageLife</th>-->
             <th>comments</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="reagent : ${reagents}">
             <td th:text="${reagent.id}">1</td>
-            <td th:text="${reagent.compound.getId()}">1</td>
+            <td th:text="${reagent.compound.getShortName()}">1</td>
+            <td th:text="${reagent.compound.getIupacName()}">1</td>
+            <td th:text="${reagent.compound.getFormula()}">1</td>
             <td th:text="${reagent.location.getId()}">1</td>
             <td th:text="${reagent.receiptDate}">1</td>
-            <td th:text="${reagent.storageLife}">1</td>
+            <!--<td th:text="${reagent.storageLife}">1</td>-->
             <td th:text="${reagent.comments}">1</td>
         </tr>
         </tbody>

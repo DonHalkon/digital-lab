@@ -16,10 +16,13 @@ public class Compound {
     @Column(name = "SMILES")
     private String smiles;
 
-    @Column(name = "SHORT_NAME")
+    @Column(name = "FORMULA")
+    private String formula;
+
+    @Column(name = "SHORT_NAME", nullable = false, unique = true)
     private String shortName;
 
-    @Column(name = "iupacName")
+    @Column(name = "iupacName", nullable = false, unique = true)
     private String iupacName;
 
     public Long getId() {
@@ -60,5 +63,13 @@ public class Compound {
 
     public void setIupacName(String iupacName) {
         this.iupacName = iupacName;
+    }
+
+    public String getFormula() {
+        return formula;
+    }
+
+    public void setFormula(String formula) {
+        this.formula = formula;
     }
 }

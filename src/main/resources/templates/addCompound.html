@@ -22,58 +22,66 @@
 		        document.getElementById("smiles_input").value = data;
 
 	        }
-
-
         </script>
     </th:block>
 </head>
 
 <body>
 <div th:replace="fragments/header :: header"/>
-<h2>Create New Compound</h2>
 
-<div>
-    <form action="#" method="post" th:object="${compound}">
-        <table class="table table-bordered">
-            <tbody>
-            <tr>
-                <th>CID:</th>
-                <td><input name="cid" th:field="*{cid}"/></td>
-            </tr>
-            <tr>
-                <!--<form action="find-by-smiles" th:object="${compound}" method="post">-->
-                <!--<input type="hidden" th:field="${id}" />-->
+<h1 class="col-sm-offset-1">Add New Compound</h1>
 
-                <th>SMILES:</th>
-                <td>
-                    <textarea class="form-control" rows="3" th:field="*{smiles}" id="smiles_input"
-                              readonly="true"></textarea>
-                    <button name="action" value="find-by-smiles" class="btn btn-success">Find</button>
-                    <!--<input type="button" value="Transfer to editor" onClick="toEditor()"/>-->
-                </td>
+<div th:if="${message != null}" th:assert="${!#strings.isEmpty(message)}" class="alert alert-danger">
+    <strong><span th:text="${message}">empty</span></strong>
+</div>
 
-                <!--</form>-->
-            </tr>
-            <tr>
-                <th>Short Name:</th>
-                <td><input name="name" th:field="*{shortName}"/></td>
-            </tr>
-            <tr>
-                <th>IUPAC Name:</th>
-                <td><input name="IUPAC Name" th:field="*{iupacName}"/></td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <button name="action" value="save" class="btn btn-success">Save</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+<div layout:fragment="content" style="width:60%">
+    <form action="#" method="post" th:object="${compound}" class="form-horizontal">
 
-        <div id="jsme_container"></div>
+
+        <div class="row form-group">
+            <label class="col-sm-2 control-label">CID:</label>
+            <div class="col-sm-10">
+                <input name="cid" th:field="*{cid}"/>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <label class="col-sm-2 control-label">SMILES:</label>
+            <div class="col-sm-10">
+                <textarea class="form-control" rows="3" th:field="*{smiles}" id="smiles_input"
+                          readonly="true"></textarea>
+            </div>
+            <button name="action" value="find-by-smiles" class="btn btn-primary btn-sm col-sm-offset-10">Find in PubChem</button>
+        </div>
+
+        <div class="row form-group">
+            <label class="col-sm-2 control-label">Short Name:</label>
+            <div class="col-sm-10">
+                <input name="name" th:field="*{shortName}"/>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <label class="col-sm-2 control-label">Molecular Formula:</label>
+            <div class="col-sm-10">
+                <input name="formula" th:field="*{formula}"/>
+            </div>
+        </div>
+
+        <div class="row form-group">
+            <label class="col-sm-2 control-label">IUPAC Name:</label>
+            <div class="col-sm-10">
+                <input name="IUPAC Name" th:field="*{iupacName}"/>
+            </div>
+        </div>
+
+        <div id="jsme_container" class="col-sm-offset-5"></div>
+
+        <button name="action" value="save" class="btn btn-success col-sm-offset-12">Save</button>
 
     </form>
-    <a href="/reagents/main" class="btn btn-success">Back</a>
+    <a href="/reagents/main" class="btn">Back</a>
 </div>
 </body>
 </html>
