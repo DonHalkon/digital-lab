@@ -25,10 +25,6 @@ public class DefaultView extends WebMvcConfigurerAdapter {
             registry.addResourceHandler("/bootstrap/**").addResourceLocations("classpath:/bootstrap/");
         }
 
-        if (!registry.hasMappingForPattern("/templates/fragments/**")) {
-            registry.addResourceHandler("/templates/fragments/**").addResourceLocations("classpath:/templates.fragments/");
-        }
-
 
         if (!registry.hasMappingForPattern("/js/**")) {
             registry.addResourceHandler("/js/**").addResourceLocations("classpath:/js/");

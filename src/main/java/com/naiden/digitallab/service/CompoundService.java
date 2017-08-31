@@ -91,7 +91,7 @@ public class CompoundService {
                     compound.setIupacName(o.get("IUPACName").toString());
                 }
             } catch (Exception e) {
-                // FIXME: What Exception? What can we do here?
+                // FIXME: What kind of Exception? What can we do here?
             }
         }
     }
