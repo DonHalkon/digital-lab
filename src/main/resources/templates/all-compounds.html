@@ -33,7 +33,8 @@
             <th>Molecular Formula</th>
             <th>Structure</th>
             <th>CID</th>
-            <th>Empty</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
         </thead>
         <tbody>
@@ -50,7 +51,20 @@
                 </div>
             </td>
             <td th:text="${compound.cid}">1</td>
-            <td>empty</td>
+            <td>
+
+
+
+                <!--ADD short name editing option-->
+                <button name="action" value="find-by-smiles" class="btn btn-primary btn-sm">edit</button>
+            </td>
+            <td>
+
+
+
+                <!--ADD delete entity option-->
+                <button name="action" value="find-by-smiles" class="btn btn-danger btn-sm">delete</button>
+            </td>
         </tr>
         </tbody>
     </table>
