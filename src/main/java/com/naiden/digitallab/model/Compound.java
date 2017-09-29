@@ -10,10 +10,10 @@ public class Compound {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "CID")
+    @Column(name = "CID", unique = true)
     private String cid;
 
-    @Column(name = "SMILES")
+    @Column(name = "SMILES", unique = true)
     private String smiles;
 
     @Column(name = "FORMULA")

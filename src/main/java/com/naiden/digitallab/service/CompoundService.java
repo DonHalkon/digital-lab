@@ -36,6 +36,7 @@ public class CompoundService {
     }
 
     public Compound save(Compound compound){
+        Compound savedCompound;
         // try to find additional info in web
         String smiles = compound.getSmiles();
         if (!compound.getSmiles().isEmpty()) {
@@ -47,21 +48,20 @@ public class CompoundService {
         }
 
         String iupacName = compound.getIupacName();
-        String cid = compound.getCid();
-
-        List<Compound> byUipacName = compoundRepository.findByIupacName(iupacName);
-        if (byUipacName.size() !=0 ) return null;
-
-        List<Compound> byCid = compoundRepository.findByCid(cid);
-        if (byCid.size() !=0 ) return null;
 
         setMolecularFormulaBySmiles(compound);
 
         if (compound.getShortName().isEmpty() && !iupacName.isEmpty()) compound.setShortName(iupacName);
-        List<Compound> byShortName = compoundRepository.findByShortName(compound.getShortName());
-        if (byShortName.size() !=0 ) return null;
 
-        return compoundRepository.save(compound);
+        try {
+            savedCompound = compoundRepository.save(compound);
+//        } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException exception){
+        } catch (Exception exception){
+//            redirect
+            savedCompound = null;
+        }
+
+        return savedCompound;
     }
 
     public Compound setCompoundInfoBySmiles(String smiles, Compound compound) throws IOException {
