@@ -4,6 +4,7 @@ import com.naiden.digitallab.model.Compound;
 import com.naiden.digitallab.service.CompoundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,7 +29,7 @@ public class CompoundController {
     }
 
     @RequestMapping("/all-compounds")
-    public String viewAllCompunds(Map<String, Object> model) {
+    public String viewAllCompounds(Map<String, Object> model) {
         Iterable<Compound> compounds = compoundService.findAll();
         model.put("compounds", compounds);
         return "all-compounds";
@@ -36,12 +37,13 @@ public class CompoundController {
 
     @RequestMapping(value = "/add-new-compound", method = RequestMethod.POST, params = "action=save")
     public ModelAndView saveNewCompound(Compound compound) {
-        if (compoundService.save(compound) != null) {
+        try {
+            compoundService.save(compound);
             return new ModelAndView("redirect:/compounds/all-compounds");
-        } else {
+        } catch (Exception ex) {
             ModelAndView mav = new ModelAndView("addCompound");
             mav.addObject("compound", compound);
-            mav.addObject("message", "Compound exists in DB!");
+            mav.addObject("message", "Can't save compound. Probably this compound exists in DB!");
             return mav;
         }
     }
@@ -55,6 +57,26 @@ public class CompoundController {
         Map<String, Object> model = new HashMap<>();
         model.put("compound", compound);
         return new ModelAndView("addCompound", model);
+    }
+
+    @RequestMapping(value = "{id}/delete")
+    public ModelAndView deleteById(@PathVariable Long id) {
+        compoundService.deleteById(id);
+        return new ModelAndView("redirect:/compounds/all-compounds");
+    }
+
+    @RequestMapping(value = "{id}/edit")
+    public ModelAndView editById(@PathVariable Long id) {
+        Compound compound = compoundService.findById(id);
+        Map<String, Object> model = new HashMap<>();
+        model.put("compound", compound);
+        return addNewCompound(model);
+    }
+
+    @RequestMapping(value = "{id}/edit", params = "action=save")
+    public ModelAndView saveById(@PathVariable Long id, Compound compound) {
+        compoundService.update(compound);
+        return new ModelAndView("redirect:/compounds/all-compounds");
     }
 
 }

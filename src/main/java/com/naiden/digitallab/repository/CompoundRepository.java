@@ -9,4 +9,5 @@ public interface CompoundRepository extends CrudRepository<Compound, Long> {
     List<Compound> findByIupacName(String iupacName);
     List<Compound> findByCid(String cid);
     List<Compound> findByShortName(String shortName);
+    void deleteById(Long id);
 }

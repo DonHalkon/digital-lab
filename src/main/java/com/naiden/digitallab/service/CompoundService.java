@@ -27,15 +27,15 @@ public class CompoundService {
     @Autowired
     private CompoundRepository compoundRepository;
 
-    public Iterable<Compound> findAll(){
+    public Iterable<Compound> findAll() {
         return compoundRepository.findAll();
     }
 
-    public Compound findById(Long id){
+    public Compound findById(Long id) {
         return compoundRepository.findOne(id);
     }
 
-    public Compound save(Compound compound){
+    public Compound save(Compound compound) throws Exception {
         Compound savedCompound;
         // try to find additional info in web
         String smiles = compound.getSmiles();
@@ -46,22 +46,10 @@ public class CompoundService {
                 e.printStackTrace();
             }
         }
-
         String iupacName = compound.getIupacName();
-
         setMolecularFormulaBySmiles(compound);
-
         if (compound.getShortName().isEmpty() && !iupacName.isEmpty()) compound.setShortName(iupacName);
-
-        try {
-            savedCompound = compoundRepository.save(compound);
-//        } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException exception){
-        } catch (Exception exception){
-//            redirect
-            savedCompound = null;
-        }
-
-        return savedCompound;
+        return compoundRepository.save(compound);
     }
 
     public Compound setCompoundInfoBySmiles(String smiles, Compound compound) throws IOException {
@@ -113,6 +101,14 @@ public class CompoundService {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
         connection.setRequestMethod("GET");
         return connection;
+    }
+
+    public void deleteById(Long aLong) {
+        compoundRepository.delete(aLong);
+    }
+
+    public void update(Compound compound) {
+        compoundRepository.save(compound);
     }
 
 }

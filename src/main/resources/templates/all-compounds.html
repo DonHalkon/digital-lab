@@ -6,16 +6,19 @@
     <meta charset="utf-8"/>
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
     <th:block layout:fragment="script">
-	<!--<script type="text/javascript" src="/media/js/site.js?_=2ec2144600499da11df5c1cee6ac09df"></script>-->
-	<!--<script type="text/javascript" src="/media/js/dynamic.php?comments-page=examples%2Fstyling%2Fbootstrap.html"></script>-->
-	<script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
-	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
-	<!--<script type="text/javascript" language="javascript" src="../resources/demo.js"></script>-->
+        <!--<script type="text/javascript" src="/media/js/site.js?_=2ec2144600499da11df5c1cee6ac09df"></script>-->
+        <!--<script type="text/javascript" src="/media/js/dynamic.php?comments-page=examples%2Fstyling%2Fbootstrap.html"></script>-->
+        <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
+        <script type="text/javascript" language="javascript"
+                src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" language="javascript"
+                src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
+        <!--<script type="text/javascript" language="javascript" src="../resources/demo.js"></script>-->
         <script>
             $(document).ready(function() {
                  $('#table').DataTable();
             } );
+
         </script>
         <script type="text/javascript" language="javascript" src="/js/jsme/jsme.nocache.js"></script>
     </th:block>
@@ -39,11 +42,9 @@
         </thead>
         <tbody>
         <tr th:each="compound : ${compounds}">
-            <!--<td th:text="${compound.id}">1</td>-->
             <td th:text="${compound.shortName}">1</td>
             <td th:text="${compound.iupacName}">1</td>
             <td th:text="${compound.getFormula()}">1</td>
-            <!--<td th:text="${compound.smiles}">1</td>-->
             <td>
                 <div code="JME.class" name="JME" archive="JME.jar" width="120" height="80" id="JME">
                     <param name="options" value="depict,useopenchemlib"/>
@@ -52,18 +53,15 @@
             </td>
             <td th:text="${compound.cid}">1</td>
             <td>
+                <form th:object="${compound}" th:action="@{{id}/edit(id=${compound.id})}" method="post"
+                      class="form-horizontal">
+                    <button type="submit" class="btn btn-primary btn-sm">edit</button>
+                </form>
 
-
-
-                <!--ADD short name editing option-->
-                <button name="action" value="find-by-smiles" class="btn btn-primary btn-sm">edit</button>
-            </td>
-            <td>
-
-
-
-                <!--ADD delete entity option-->
-                <button name="action" value="find-by-smiles" class="btn btn-danger btn-sm">delete</button>
+                <form th:object="${compound}" th:action="@{{id}/delete(id=${compound.id})}" method="post"
+                      class="form-horizontal">
+                    <button type="submit" class="btn btn-danger btn-sm">delete</button>
+                </form>
             </td>
         </tr>
         </tbody>
