@@ -34,8 +34,10 @@
             <th>Structure</th>
             <th>Location</th>
             <th>Receipt Date</th>
-            <!--<th>storageLife</th>-->
-            <th>comments</th>
+            <th>Storage Life</th>
+            <th>Amount</th>
+            <th>Units</th>
+            <th>Comments</th>
         </tr>
         </thead>
         <tbody>
@@ -52,7 +54,9 @@
             </td>
             <td th:text="${reagent.location.getDescr()}">1</td>
             <td th:text="${reagent.receiptDate}">1</td>
-            <!--<td th:text="${reagent.storageLife}">1</td>-->
+            <td th:text="${reagent.storageLife}">1</td>
+            <td th:text="${reagent.amount}">1</td>
+            <td th:text="${reagent.measurementUnits}">1</td>
             <td th:text="${reagent.comments}">1</td>
         </tr>
         </tbody>

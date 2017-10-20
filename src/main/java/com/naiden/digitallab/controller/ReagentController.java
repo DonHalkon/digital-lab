@@ -53,17 +53,18 @@ public class ReagentController {
 //        return "Compound Saved";
 //    }
 
-    @GetMapping(path = "/api/get-all")
-    public @ResponseBody
-    Iterable<Reagent> getAllReagents() {
-        return reagentRepository.findAll();
-    }
+    // TODO: uncomment when needed
+//    @GetMapping(path = "/api/get-all")
+//    public @ResponseBody
+//    Iterable<Reagent> getAllReagents() {
+//        return reagentRepository.findAll();
+//    }
 
-    @RequestMapping(value = {"", "/", "/main"})
+    @RequestMapping(value = {"", "/", "/view-reagents"})
     public String main(Map<String, Object> model) {
         Iterable<Reagent> reagents = reagentRepository.findAll();
         model.put("reagents", reagents);
-        return "main";
+        return "view-reagents";
     }
 
     @RequestMapping("/add-new-reagent")
@@ -77,9 +78,9 @@ public class ReagentController {
 
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveNewReagent(@ModelAttribute("command") Reagent reagent, BindingResult result) {
+    public String saveNewReagent(@ModelAttribute("command") Reagent reagent) {
         reagentRepository.save(reagent);
-        return "redirect:main";
+        return "redirect:view-reagents";
     }
 
 }

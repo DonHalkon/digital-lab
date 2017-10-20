@@ -30,4 +30,11 @@ public class LocationController {
         locationRepository.save(location);
         return "redirect:/reagents/main";
     }
+
+    @RequestMapping("/view-locations")
+    public String viewAllLocations(Map<String, Object> model) {
+        Iterable<Location> locations = locationRepository.findAll();
+        model.put("locations", locations);
+        return "view-locations";
+    }
 }

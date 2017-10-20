@@ -10,32 +10,58 @@
 
 <body>
 <div th:replace="fragments/header :: header"/>
-<h2>Create New Reagent</h2>
-<div layout:fragment="content" style="width:60%">
+<center><h2>Create New Reagent</h2></center>
+<div layout:fragment="content" style="width:60% center">
     <center>
         <form method="POST" action="save" th:object="${reagent}" class="form-horizontal">
             <div class="form-group">
                 <label class="col-sm-2 control-label">Receipt Date: </label>
-                <div class="col-sm-10">
-                    <input th:field="*{receiptDate}" th:placeholder="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/>
+                <div class="col-sm-3">
+                    <input th:field="*{receiptDate}"
+                           type="date"
+                           th:placeholder="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}"/>
                 </div>
             </div>
-
+            <div class="form-group">
+                <label class="col-sm-2 control-label">Storage Life: </label>
+                <div class="col-sm-3">
+                    <input th:field="*{storageLife}" placeholder="days or months or years"/>
+                </div>
+            </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">Compound: </label>
-                <div class="col-sm-10">
+                <div class="col-sm-3">
                     <select th:field="*{compound}" class="form-control">
                         <option value="-1">Select a compound</option>
                         <option th:each="compound : ${compounds}"
                                 th:value="${compound.id}"
-                                th:text="${compound.shortName}">Select a compound
+                                th:text="${compound.shortName}">
+                            Select a compound
                         </option>
                     </select>
                 </div>
             </div>
+
+            <div class="row">
+                <label class="col-sm-2 control-label">Amount: </label>
+                <div class="col-sm-3">
+                    <div class="col-sm-6"><input th:field="*{amount}" placeholder="0.000"/></div>
+                    <div class="col-sm-3">
+                        <select th:field="*{measurementUnits}" class="form-control">
+                            <option th:each="unit : ${T(com.naiden.digitallab.model.MeasurementUnits).values()}"
+                                    th:value="${unit}"
+                                    th:text="${unit}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+
+
             <div class="form-group">
                 <label class="col-sm-2 control-label">Location: </label>
-                <div class="col-sm-10">
+                <div class="col-sm-3">
                     <select th:field="*{location}" class="form-control">
                         <option value="-1">Select a location</option>
                         <option th:each="location : ${locations}"
@@ -47,13 +73,12 @@
             </div>
             <div class="form-group">
                 <label class="col-sm-2 control-label">Comments: </label>
-                <div class="col-sm-10">
-                    <textarea class="form-control" rows="3" th:field="*{comments}"></textarea>
+                <div class="col-sm-5">
+                    <textarea class="form-control" rows="5" th:field="*{comments}"></textarea>
                 </div>
             </div>
             <input type="submit" class="btn btn-default" value="SAVE"/>
         </form>
-        <a href="/reagents/main" class="btn btn-success">Back</a>
     </center>
 </div>
 </body>

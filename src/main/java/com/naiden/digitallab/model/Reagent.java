@@ -23,10 +23,16 @@ public class Reagent {
     private Date receiptDate;
 
     @Column(name="STORAGE_LIFE")
-    private Date storageLife;
+    private String storageLife;
 
     @Column(name = "COMMENTS")
     private String comments;
+
+    @Enumerated(EnumType.ORDINAL)
+    private MeasurementUnits measurementUnits;
+
+    @Column(name = "AMOUNT")
+    private Double amount;
 
     public int getId() {
         return id;
@@ -60,11 +66,11 @@ public class Reagent {
         this.receiptDate = receiptDate;
     }
 
-    public Date getStorageLife() {
+    public String getStorageLife() {
         return storageLife;
     }
 
-    public void setStorageLife(Date storageLife) {
+    public void setStorageLife(String storageLife) {
         this.storageLife = storageLife;
     }
 
@@ -74,5 +80,21 @@ public class Reagent {
 
     public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    public MeasurementUnits getMeasurementUnits() {
+        return measurementUnits;
+    }
+
+    public void setMeasurementUnits(MeasurementUnits measurementUnits) {
+        this.measurementUnits = measurementUnits;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 }
