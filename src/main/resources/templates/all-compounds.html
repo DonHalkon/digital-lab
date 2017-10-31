@@ -1,19 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Compounds</title>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
-    <th:block layout:fragment="script">
-        <!--<script type="text/javascript" src="/media/js/site.js?_=2ec2144600499da11df5c1cee6ac09df"></script>-->
-        <!--<script type="text/javascript" src="/media/js/dynamic.php?comments-page=examples%2Fstyling%2Fbootstrap.html"></script>-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
         <script type="text/javascript" language="javascript" src="//code.jquery.com/jquery-1.12.4.js"></script>
         <script type="text/javascript" language="javascript"
                 src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" language="javascript"
                 src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>
-        <!--<script type="text/javascript" language="javascript" src="../resources/demo.js"></script>-->
         <script>
             $(document).ready(function() {
                  $('#table').DataTable();
@@ -21,7 +16,6 @@
 
         </script>
         <script type="text/javascript" language="javascript" src="/js/jsme/jsme.nocache.js"></script>
-    </th:block>
 </head>
 <body>
 

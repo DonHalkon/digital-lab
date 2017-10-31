@@ -5,11 +5,8 @@
 <head>
     <title>Add compound</title>
     <meta charset="utf-8"/>
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
-
-    <th:block layout:fragment="script">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
         <script type="text/javascript" language="javascript" src="/js/jsme/jsme.nocache.js"></script>
-
         <script>
          //this function will be called after the JavaScriptApplet code has been loaded.
             function jsmeOnLoad() {
@@ -22,7 +19,6 @@
 		        document.getElementById("smiles_input").value = data;
 	        }
         </script>
-    </th:block>
 </head>
 
 <body>

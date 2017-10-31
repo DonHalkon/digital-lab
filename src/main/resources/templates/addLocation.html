@@ -6,17 +6,13 @@
 <head>
     <title>Add location</title>
     <meta charset="utf-8"/>
-    <!--<title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Task List</title>-->
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1" />-->
-    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
 </head>
 <body>
 <div th:replace="fragments/header :: header">
 
 </div>
 <div layout:fragment="content" style="width:60%">
-    <!--<center>-->
         <h2>Create New Location</h2>
 
         <form action="save" method="post" th:object="${location}">
@@ -32,8 +28,6 @@
             <button name="action" value="save" class="btn btn-success col-sm-offset-2">Save</button>
 
         </form>
-        <!--<a href="/reagents/main" class="btn btn-success">Back</a>-->
-    <!--</center>-->
 </div>
 </body>
 </html>
