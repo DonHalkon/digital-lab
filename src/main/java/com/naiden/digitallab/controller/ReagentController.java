@@ -31,16 +31,17 @@ public class ReagentController {
     @Autowired
     private LocationRepository locationRepository;
 
-    @GetMapping(path = "/api/add-reagent")
-    public @ResponseBody
-    String addNewReagentApi(@RequestParam String comments, @RequestParam Long compoundId) {
-        Reagent reagent = new Reagent();
-        reagent.setComments(comments);
-        reagent.setReceiptDate(new Date(Calendar.getInstance().getTime().getTime()));
-        reagent.setCompound(compoundRepository.findOne(compoundId));
-        reagentRepository.save(reagent);
-        return "Reagent Saved";
-    }
+    // FIXME: temporary disabled
+//    @GetMapping(path = "/api/add-reagent")
+//    public @ResponseBody
+//    String addNewReagentApi(@RequestParam String comments, @RequestParam Long compoundId) {
+//        Reagent reagent = new Reagent();
+//        reagent.setComments(comments);
+//        reagent.setReceiptDate(new Date(Calendar.getInstance().getTime().getTime()));
+//        reagent.setCompound(compoundRepository.findOne(compoundId));
+//        reagentRepository.save(reagent);
+//        return "Reagent Saved";
+//    }
 
     // FIXME: temporary disabled
 //    @GetMapping(path = "/api/add-compound")
@@ -60,7 +61,7 @@ public class ReagentController {
 //        return reagentRepository.findAll();
 //    }
 
-    @RequestMapping(value = {"", "/", "/view-reagents"})
+    @RequestMapping(value = {"/view-reagents"})
     public String main(Map<String, Object> model) {
         Iterable<Reagent> reagents = reagentRepository.findAll();
         model.put("reagents", reagents);
