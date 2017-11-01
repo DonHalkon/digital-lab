@@ -18,17 +18,17 @@ public class LocationController {
     @Autowired
     private LocationRepository locationRepository;
 
-    @RequestMapping("/add-new-location")
+    @RequestMapping("/add-location")
     public ModelAndView addNewLocation() {
         Map<String, Object> model = new HashMap<>();
         model.put("location", new Location());
-        return new ModelAndView("addlocation", model);
+        return new ModelAndView("add-location", model);
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveNewLocation(Location location) {
         locationRepository.save(location);
-        return "redirect:/reagents/main";
+        return "redirect:/locations/view-locations";
     }
 
     @RequestMapping("/view-locations")

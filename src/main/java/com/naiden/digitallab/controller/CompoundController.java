@@ -20,35 +20,35 @@ public class CompoundController {
     @Autowired
     private CompoundService compoundService;
 
-    @RequestMapping("/add-new-compound")
+    @RequestMapping("/add-compound")
     public ModelAndView addNewCompound(Map<String, Object> model) {
         if (!model.containsKey("compound")) {
             model.put("compound", new Compound());
         }
-        return new ModelAndView("addCompound", model);
+        return new ModelAndView("add-compound", model);
     }
 
-    @RequestMapping("/all-compounds")
+    @RequestMapping("/view-compounds")
     public String viewAllCompounds(Map<String, Object> model) {
         Iterable<Compound> compounds = compoundService.findAll();
         model.put("compounds", compounds);
-        return "all-compounds";
+        return "view-compounds";
     }
 
-    @RequestMapping(value = "/add-new-compound", method = RequestMethod.POST, params = "action=save")
+    @RequestMapping(value = "/add-compound", method = RequestMethod.POST, params = "action=save")
     public ModelAndView saveNewCompound(Compound compound) {
         try {
             compoundService.save(compound);
-            return new ModelAndView("redirect:/compounds/all-compounds");
+            return new ModelAndView("redirect:/compounds/view-compounds");
         } catch (Exception ex) {
-            ModelAndView mav = new ModelAndView("addCompound");
+            ModelAndView mav = new ModelAndView("add-compound");
             mav.addObject("compound", compound);
             mav.addObject("message", "Can't save compound. Probably this compound exists in DB!");
             return mav;
         }
     }
 
-    @RequestMapping(value = "/add-new-compound", method = RequestMethod.POST, params = "action=find-by-smiles")
+    @RequestMapping(value = "/add-compound", method = RequestMethod.POST, params = "action=find-by-smiles")
     public ModelAndView findBySmiles(Compound compound) throws IOException {
         compound.setIupacName("");
         compound.setCid("");
@@ -56,13 +56,13 @@ public class CompoundController {
         compoundService.setCompoundInfoBySmiles(compound.getSmiles(), compound);
         Map<String, Object> model = new HashMap<>();
         model.put("compound", compound);
-        return new ModelAndView("addCompound", model);
+        return new ModelAndView("add-compound", model);
     }
 
     @RequestMapping(value = "{id}/delete")
     public ModelAndView deleteById(@PathVariable Long id) {
         compoundService.deleteById(id);
-        return new ModelAndView("redirect:/compounds/all-compounds");
+        return new ModelAndView("redirect:/compounds/view-compounds");
     }
 
     @RequestMapping(value = "{id}/edit")
@@ -76,7 +76,7 @@ public class CompoundController {
     @RequestMapping(value = "{id}/edit", params = "action=save")
     public ModelAndView saveById(@PathVariable Long id, Compound compound) {
         compoundService.update(compound);
-        return new ModelAndView("redirect:/compounds/all-compounds");
+        return new ModelAndView("redirect:/compounds/view-compounds");
     }
 
 }

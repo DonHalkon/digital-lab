@@ -68,13 +68,13 @@ public class ReagentController {
         return "view-reagents";
     }
 
-    @RequestMapping("/add-new-reagent")
+    @RequestMapping("/add-reagent")
     public ModelAndView addNewReagent() {
         Map<String, Object> model = new HashMap<>();
         model.put("reagent", new Reagent());
         model.put("compounds", compoundRepository.findAll());
         model.put("locations", locationRepository.findAll());
-        return new ModelAndView("addreagent", model);
+        return new ModelAndView("add-reagent", model);
     }
 
 
