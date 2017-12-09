@@ -1,0 +1,47 @@
+server:
+    port: 8080
+
+spring:
+  profiles:
+    active: local
+
+  application:
+    name: digital-lab
+
+  jpa:
+    hibernate:
+      naming-strategy: org.hibernate.cfg.DefaultNamingStrategy
+      ddl-auto: create-drop
+
+  security:
+    ignored: /**
+
+  thymeleaf:
+    cache: false
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+---
+spring:
+  profiles: docker
+
+  datasource:
+    url: jdbc:mysql://${MYSQL_HOST}:${MYSQL_PORT}/digital_lab?useSSL=false
+    name: digital_lab
+    username: springuser
+    password: ThePassword
+    driver-class-name: com.mysql.jdbc.Driver
+    platform: mysql
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+---
+spring:
+  profiles: local
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:digital-lab;DB_CLOSE_ON_EXIT=FALSE
+    name: digital_lab
+    platform: h2

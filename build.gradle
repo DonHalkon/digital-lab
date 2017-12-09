@@ -5,9 +5,14 @@ buildscript {
 	repositories {
         mavenLocal()
 		mavenCentral()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath('se.transmode.gradle:gradle-docker:1.2')
+		classpath "com.avast.gradle:gradle-docker-compose-plugin:0.6.6"
 	}
 }
 
@@ -17,12 +22,43 @@ apply plugin: 'idea'
 //apply plugin: 'project-report' // gradle htmlDependencyReport
 apply plugin: 'org.springframework.boot'
 
+apply plugin: 'docker'
+apply plugin: 'docker-compose'
+
 version = '0.0.1-SNAPSHOT'
+
 sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+jar {
+	baseName = 'digital-lab'
+}
+
+task buildDocker(type: Docker, dependsOn: build) {
+	applicationName = jar.baseName
+	dockerfile = file('docker/Dockerfile')
+	doFirst {
+		copy {
+			from jar
+			into "${stageDir}/target"
+		}
+	}
+}
+
+composeUp.dependsOn buildDocker
+
+dockerCompose {
+	useComposeFiles = ["docker/docker-compose.yml"]
+	captureContainersOutput = true
+	removeContainers = true
+}
+
+bootRun { systemProperties = System.properties }
 
 repositories {
     mavenLocal()
 	mavenCentral()
+	maven { url "https://repository.jboss.org/nexus/content/repositories/releases"}
 }
 
 
@@ -41,6 +77,8 @@ dependencies {
     compile group: 'org.openscience.cdk', name: 'cdk-silent', version: '2.0'
     // https://mvnrepository.com/artifact/org.openscience.cdk/cdk-silent
     compile group: 'org.openscience.cdk', name: 'cdk-formula', version: '2.0'
+    // h2 driver
+    compile 'com.h2database:h2:1.4.196'
 
 
 
