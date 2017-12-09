@@ -17,8 +17,8 @@ But now it is only the plans for future)).
 #  Installation #
 ## Build from source ##
 1. Download [jsme](http://peter-ertl.com/jsme/)
-2. Put it into src/main/resources/js/ 
-3. Rename to 'jsme'
+2. Unzip 
+3. Move jsme directory to src/main/resources/js/ 
 4. Build:
 ```bash
 gradle clean build
