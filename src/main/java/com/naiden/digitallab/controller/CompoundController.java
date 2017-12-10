@@ -48,17 +48,6 @@ public class CompoundController {
         }
     }
 
-    @RequestMapping(value = "/add-compound", method = RequestMethod.POST, params = "action=find-by-smiles")
-    public ModelAndView findBySmiles(Compound compound) throws IOException {
-        compound.setIupacName("");
-        compound.setCid("");
-        compound.setShortName("");
-        compoundService.setCompoundInfoBySmiles(compound.getSmiles(), compound);
-        Map<String, Object> model = new HashMap<>();
-        model.put("compound", compound);
-        return new ModelAndView("add-compound", model);
-    }
-
     @RequestMapping(value = "{id}/delete")
     public ModelAndView deleteById(@PathVariable Long id) {
         compoundService.deleteById(id);

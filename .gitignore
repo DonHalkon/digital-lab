@@ -24,6 +24,9 @@ hs_err_pid*
 .classpath
 .project
 .gradle/
+gradle/
 .settings/
 bin/
 build/
+src/main/js/
+src/main/resources/js/jsme/

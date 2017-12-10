@@ -12,9 +12,12 @@ public class Compound {
 
     @Column(name = "CID", unique = true)
     private String cid;
+//
+//    @Column(name = "SMILES", unique = true)
+//    private String smiles;
 
-    @Column(name = "SMILES", unique = true)
-    private String smiles;
+    @Column(name = "JSME_FILE", unique = true)
+    private String jmeFile;
 
     @Column(name = "FORMULA")
     private String formula;
@@ -33,13 +36,13 @@ public class Compound {
         this.id = id;
     }
 
-    public String getSmiles() {
-        return smiles;
-    }
-
-    public void setSmiles(String smiles) {
-        this.smiles = smiles;
-    }
+//    public String getSmiles() {
+//        return smiles;
+//    }
+//
+//    public void setSmiles(String smiles) {
+//        this.smiles = smiles;
+//    }
 
     public String getCid() {
         return cid;
@@ -71,5 +74,13 @@ public class Compound {
 
     public void setFormula(String formula) {
         this.formula = formula;
+    }
+
+    public String getJmeFile() {
+        return jmeFile;
+    }
+
+    public void setJmeFile(String jmeFile) {
+        this.jmeFile = jmeFile;
     }
 }

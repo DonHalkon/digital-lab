@@ -36,72 +36,24 @@ public class CompoundService {
     }
 
     public Compound save(Compound compound) throws Exception {
-        Compound savedCompound;
-        // try to find additional info in web
-        String smiles = compound.getSmiles();
-        if (!compound.getSmiles().isEmpty()) {
-            try {
-                setCompoundInfoBySmiles(smiles, compound);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
         String iupacName = compound.getIupacName();
-        setMolecularFormulaBySmiles(compound);
+//        setMolecularFormulaBySmiles(compound);
         if (compound.getShortName().isEmpty() && !iupacName.isEmpty()) compound.setShortName(iupacName);
         return compoundRepository.save(compound);
     }
 
-    public Compound setCompoundInfoBySmiles(String smiles, Compound compound) throws IOException {
-        String requestURL = "https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/smiles/" + URLEncoder.encode(smiles, "UTF-8") + "/property/IUPACName/JSON";
-        HttpURLConnection connection = getHttpURLConnection(requestURL);
-        setCompoundIupacNameAndCid(compound, connection);
-        return compound;
-    }
 
-    public void setCompoundIupacNameAndCid(Compound compound, HttpURLConnection connection) throws IOException {
-        if (200 == connection.getResponseCode()) {
-            BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String inputLine;
-            StringBuilder response = new StringBuilder();
-
-            while ((inputLine = in.readLine()) != null) {
-                response.append(inputLine);
-            }
-            in.close();
-            JSONObject json = new JSONObject(response.toString());
-
-            try {
-                JSONArray jsonArray = json.getJSONObject("PropertyTable").getJSONArray("Properties");
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    JSONObject o = jsonArray.getJSONObject(i);
-                    compound.setCid(o.get("CID").toString());
-                    compound.setIupacName(o.get("IUPACName").toString());
-                }
-            } catch (Exception e) {
-                // FIXME: What kind of Exception? What can we do here?
-            }
-        }
-    }
-
-    public void setMolecularFormulaBySmiles(Compound compound) {
-        if (!compound.getFormula().isEmpty()) return;
-        try {
-            SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
-            IAtomContainer mol = sp.parseSmiles(compound.getSmiles());
-            IMolecularFormula molecularFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
-            compound.setFormula(MolecularFormulaManipulator.getString(molecularFormula));
-        } catch (InvalidSmilesException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public HttpURLConnection getHttpURLConnection(String requestURL) throws IOException {
-        URL url = new URL(requestURL);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        return connection;
-    }
+//    public void setMolecularFormulaBySmiles(Compound compound) {
+//        if (!compound.getFormula().isEmpty()) return;
+//        try {
+//            SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
+//            IAtomContainer mol = sp.parseSmiles(compound.getSmiles());
+//            IMolecularFormula molecularFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
+//            compound.setFormula(MolecularFormulaManipulator.getString(molecularFormula));
+//        } catch (InvalidSmilesException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
     public void deleteById(Long aLong) {
         compoundRepository.delete(aLong);
