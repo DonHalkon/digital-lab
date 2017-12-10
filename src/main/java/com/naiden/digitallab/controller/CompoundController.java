@@ -20,14 +20,6 @@ public class CompoundController {
     @Autowired
     private CompoundService compoundService;
 
-    @RequestMapping("/add-compound")
-    public ModelAndView addNewCompound(Map<String, Object> model) {
-        if (!model.containsKey("compound")) {
-            model.put("compound", new Compound());
-        }
-        return new ModelAndView("add-compound", model);
-    }
-
     @RequestMapping("/view-compounds")
     public String viewAllCompounds(Map<String, Object> model) {
         Iterable<Compound> compounds = compoundService.findAll();
@@ -35,36 +27,36 @@ public class CompoundController {
         return "view-compounds";
     }
 
-    @RequestMapping(value = "/add-compound", method = RequestMethod.POST, params = "action=save")
-    public ModelAndView saveNewCompound(Compound compound) {
+    @RequestMapping("/edit-compound/{id}" )
+    public ModelAndView editCompound(@PathVariable Long id) {
+        ModelAndView mav = new ModelAndView("edit-compound");
+        Compound compound = (id == 0) ? new Compound() : compoundService.findById(id);
+        mav.addObject("compound", compound);
+        return mav;
+    }
+
+    @RequestMapping(value = "/edit-compound/save", method = RequestMethod.POST)
+    public ModelAndView editCompound(Compound compound) {
+        String messageColor;
+        String message;
         try {
             compoundService.save(compound);
-            return new ModelAndView("redirect:/compounds/view-compounds");
+            message = "Saved!";
+            messageColor = "alert-success";
         } catch (Exception ex) {
-            ModelAndView mav = new ModelAndView("add-compound");
-            mav.addObject("compound", compound);
-            mav.addObject("message", "Can't save compound. Probably this compound exists in DB!");
-            return mav;
+            message = "Can't save compound. Probably this compound exists in DB!";
+            messageColor = "alert-danger";
         }
+        ModelAndView mav = new ModelAndView("edit-compound");
+        mav.addObject("compound", compound).
+                addObject("message", message).
+                addObject("messageColor", messageColor);
+        return mav;
     }
 
-    @RequestMapping(value = "{id}/delete")
+    @RequestMapping(value = "/delete/{id}")
     public ModelAndView deleteById(@PathVariable Long id) {
         compoundService.deleteById(id);
-        return new ModelAndView("redirect:/compounds/view-compounds");
-    }
-
-    @RequestMapping(value = "{id}/edit")
-    public ModelAndView editById(@PathVariable Long id) {
-        Compound compound = compoundService.findById(id);
-        Map<String, Object> model = new HashMap<>();
-        model.put("compound", compound);
-        return addNewCompound(model);
-    }
-
-    @RequestMapping(value = "{id}/edit", params = "action=save")
-    public ModelAndView saveById(@PathVariable Long id, Compound compound) {
-        compoundService.update(compound);
         return new ModelAndView("redirect:/compounds/view-compounds");
     }
 

@@ -12,9 +12,6 @@ public class Compound {
 
     @Column(name = "CID", unique = true)
     private String cid;
-//
-//    @Column(name = "SMILES", unique = true)
-//    private String smiles;
 
     @Column(name = "JSME_FILE", unique = true)
     private String jmeFile;
@@ -35,14 +32,6 @@ public class Compound {
     public void setId(Long id) {
         this.id = id;
     }
-
-//    public String getSmiles() {
-//        return smiles;
-//    }
-//
-//    public void setSmiles(String smiles) {
-//        this.smiles = smiles;
-//    }
 
     public String getCid() {
         return cid;

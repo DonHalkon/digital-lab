@@ -44,11 +44,11 @@
                     </td>
                     <td th:text="${compound.cid}">1</td>
                     <td>
-                        <form th:object="${compound}" th:action="@{{id}/edit(id=${compound.id})}" method="post" class="form-horizontal">
+                        <form th:action="@{/compounds/edit-compound/{id}(id=${compound.id})}" method="get" class="form-horizontal">
                             <button type="submit" class="btn btn-primary btn-sm btn-block">Edit</button>
                         </form>
 
-                        <form th:object="${compound}" th:action="@{{id}/delete(id=${compound.id})}" method="post" class="form-horizontal">
+                        <form th:action="@{/compounds/delete/{id}(id=${compound.id})}" method="get" class="form-horizontal">
                             <button type="submit" class="btn btn-danger btn-sm btn-block">Delete</button>
                         </form>
                     </td>

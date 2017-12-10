@@ -37,23 +37,9 @@ public class CompoundService {
 
     public Compound save(Compound compound) throws Exception {
         String iupacName = compound.getIupacName();
-//        setMolecularFormulaBySmiles(compound);
         if (compound.getShortName().isEmpty() && !iupacName.isEmpty()) compound.setShortName(iupacName);
         return compoundRepository.save(compound);
     }
-
-
-//    public void setMolecularFormulaBySmiles(Compound compound) {
-//        if (!compound.getFormula().isEmpty()) return;
-//        try {
-//            SmilesParser sp = new SmilesParser(SilentChemObjectBuilder.getInstance());
-//            IAtomContainer mol = sp.parseSmiles(compound.getSmiles());
-//            IMolecularFormula molecularFormula = MolecularFormulaManipulator.getMolecularFormula(mol);
-//            compound.setFormula(MolecularFormulaManipulator.getString(molecularFormula));
-//        } catch (InvalidSmilesException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     public void deleteById(Long aLong) {
         compoundRepository.delete(aLong);
