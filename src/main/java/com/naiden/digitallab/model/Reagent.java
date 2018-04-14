@@ -2,13 +2,13 @@ package com.naiden.digitallab.model;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "reagents")
 public class Reagent {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "REAGENT_ID")
     private int id;
 
     @OneToOne(cascade = CascadeType.ALL)
@@ -96,5 +96,25 @@ public class Reagent {
 
     public void setAmount(Double amount) {
         this.amount = amount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reagent reagent = (Reagent) o;
+        return Objects.equals(compound, reagent.compound) &&
+                Objects.equals(location, reagent.location) &&
+                Objects.equals(receiptDate, reagent.receiptDate) &&
+                Objects.equals(storageLife, reagent.storageLife) &&
+                Objects.equals(comments, reagent.comments) &&
+                measurementUnits == reagent.measurementUnits &&
+                Objects.equals(amount, reagent.amount);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(compound, location, receiptDate, storageLife, comments, measurementUnits, amount);
     }
 }

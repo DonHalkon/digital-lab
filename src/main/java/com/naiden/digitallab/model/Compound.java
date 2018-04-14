@@ -1,12 +1,12 @@
 package com.naiden.digitallab.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "compounds")
 public class Compound {
     @Id
-    @Column(name="COMPOUND_ID")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -71,5 +71,23 @@ public class Compound {
 
     public void setJmeFile(String jmeFile) {
         this.jmeFile = jmeFile;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Compound compound = (Compound) o;
+        return Objects.equals(cid, compound.cid) &&
+                Objects.equals(jmeFile, compound.jmeFile) &&
+                Objects.equals(formula, compound.formula) &&
+                Objects.equals(shortName, compound.shortName) &&
+                Objects.equals(iupacName, compound.iupacName);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(cid, jmeFile, formula, shortName, iupacName);
     }
 }
