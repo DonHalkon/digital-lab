@@ -4,11 +4,14 @@ import com.naiden.digitallab.model.Compound;
 import com.naiden.digitallab.service.CompoundService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,16 +39,20 @@ public class CompoundController {
     }
 
     @RequestMapping(value = "/edit-compound/save", method = RequestMethod.POST)
-    public ModelAndView editCompound(Compound compound) {
-        String messageColor;
+    public ModelAndView editCompound(@Valid Compound compound, Errors errors) {
+        String messageColor = "alert-danger";
         String message;
-        try {
-            compoundService.save(compound);
-            message = "Saved!";
-            messageColor = "alert-success";
-        } catch (Exception ex) {
-            message = "Can't save compound. Probably this compound exists in DB!";
-            messageColor = "alert-danger";
+        if (!errors.hasErrors()) {
+            try {
+                compoundService.save(compound);
+                message = "Saved!";
+                messageColor = "alert-success";
+                compound = new Compound();
+            } catch (Exception ex) {
+                message = "Can't save compound. Probably this compound exists in DB!\n" + ex.getLocalizedMessage();
+            }
+        } else {
+            message = errors.getAllErrors().stream().map(ObjectError::toString).reduce((x, y) -> x + "; " + y).get(); // get checked in 'if' condition
         }
         ModelAndView mav = new ModelAndView("edit-compound");
         mav.addObject("compound", compound).

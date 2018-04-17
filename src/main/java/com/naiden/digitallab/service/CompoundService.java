@@ -35,7 +35,7 @@ public class CompoundService {
         return compoundRepository.findOne(id);
     }
 
-    public Compound save(Compound compound) throws Exception {
+    public Compound save(Compound compound) {
         String iupacName = compound.getIupacName();
         if (compound.getShortName().isEmpty() && !iupacName.isEmpty()) compound.setShortName(iupacName);
         return compoundRepository.save(compound);

@@ -1,6 +1,7 @@
 package com.naiden.digitallab.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 @Entity
@@ -13,7 +14,8 @@ public class Compound {
     @Column(name = "CID", unique = true)
     private String cid;
 
-    @Column(name = "JSME_FILE", unique = true)
+    @Size(min=1, message = "Empty structure!")
+    @Column(name = "JSME_FILE", nullable = false, unique = true)
     private String jmeFile;
 
     @Column(name = "FORMULA")
