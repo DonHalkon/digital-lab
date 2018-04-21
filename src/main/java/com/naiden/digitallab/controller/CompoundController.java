@@ -3,17 +3,18 @@ package com.naiden.digitallab.controller;
 import com.naiden.digitallab.model.Compound;
 import com.naiden.digitallab.service.CompoundService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -23,48 +24,57 @@ public class CompoundController {
     @Autowired
     private CompoundService compoundService;
 
-    @RequestMapping("/view-compounds")
+    @GetMapping("/view-compounds")
     public String viewAllCompounds(Map<String, Object> model) {
-        Iterable<Compound> compounds = compoundService.findAll();
-        model.put("compounds", compounds);
+        model.put("compounds", compoundService.findAll());
         return "view-compounds";
     }
 
-    @RequestMapping("/edit-compound/{id}" )
-    public ModelAndView editCompound(@PathVariable Long id) {
-        ModelAndView mav = new ModelAndView("edit-compound");
-        Compound compound = (id == 0) ? new Compound() : compoundService.findById(id);
-        mav.addObject("compound", compound);
-        return mav;
+    @GetMapping("/add-new-compound")
+    public String addNewCompound(Model model) {
+        model.addAttribute("compound", new Compound());
+        return "edit-compound";
     }
 
-    @RequestMapping(value = "/edit-compound/save", method = RequestMethod.POST)
-    public ModelAndView editCompound(@Valid Compound compound, Errors errors) {
-        String messageColor = "alert-danger";
-        String message;
+    @GetMapping("/edit-compound")
+    public String editCompound() {
+        return "edit-compound";
+    }
+
+    @GetMapping("/edit-compound/{id}")
+    public String editCompoundById(@PathVariable Long id, Model model) {
+        model.addAttribute("compound", compoundService.findById(id));
+        return "edit-compound";
+    }
+
+    @PostMapping(value = "/edit-compound")
+    public String editCompound(@Valid Compound compound, Errors errors, RedirectAttributes attributes) {
+        String messageColor = "alert-success";
+        String message = "Saved!";
         if (!errors.hasErrors()) {
             try {
                 compoundService.save(compound);
-                message = "Saved!";
-                messageColor = "alert-success";
-                compound = new Compound();
-            } catch (Exception ex) {
-                message = "Can't save compound. Probably this compound exists in DB!\n" + ex.getLocalizedMessage();
+            } catch (DataAccessException ex) {
+                attributes.addFlashAttribute(compound);
+                attributes.addFlashAttribute("message", "Can't save compound. Probably compound with the same name/CID/structure exists in DB!");
+                attributes.addFlashAttribute("messageColor", "alert-danger");
+                return "redirect:edit-compound";
             }
         } else {
-            message = errors.getAllErrors().stream().map(ObjectError::toString).reduce((x, y) -> x + "; " + y).get(); // get checked in 'if' condition
+            message = errors.getFieldErrors()
+                    .stream().map(DefaultMessageSourceResolvable::getDefaultMessage)
+                    .reduce((x, y) -> x + "\n" + y).get(); //checked in "if" condition
+            messageColor = "alert-danger";
         }
-        ModelAndView mav = new ModelAndView("edit-compound");
-        mav.addObject("compound", compound).
-                addObject("message", message).
-                addObject("messageColor", messageColor);
-        return mav;
+        attributes.addFlashAttribute("message", message);
+        attributes.addFlashAttribute("messageColor", messageColor);
+        if (compound.getId() != null) return "redirect:view-compounds";
+        return "redirect:/compounds/add-new-compound";
     }
 
-    @RequestMapping(value = "/delete/{id}")
-    public ModelAndView deleteById(@PathVariable Long id) {
+    @GetMapping(value = "/delete/{id}")
+    public String deleteById(@PathVariable Long id) {
         compoundService.deleteById(id);
-        return new ModelAndView("redirect:/compounds/view-compounds");
+        return "redirect:/compounds/view-compounds";
     }
-
 }

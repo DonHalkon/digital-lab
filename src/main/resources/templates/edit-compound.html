@@ -33,7 +33,7 @@
         <strong><span th:text="${message}"></span></strong>
     </div>
 
-    <form action="/compounds/edit-compound/save" method="post" th:object="${compound}" class="form-horizontal">
+    <form action="/compounds/edit-compound" method="post" th:object="${compound}" class="form-horizontal">
 
         <div class="row form-group" hidden="true">
             <input name="jmeFile" id="jmeFile" th:field="*{jmeFile}"/>
