@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "locations")
-public class Location {
+@Table(name = "reagent_locations")
+public class ReagentLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -29,8 +29,8 @@ public class Location {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Location location = (Location) o;
-        return Objects.equals(descr, location.descr);
+        ReagentLocation reagentLocation = (ReagentLocation) o;
+        return Objects.equals(descr, reagentLocation.descr);
     }
 
     @Override

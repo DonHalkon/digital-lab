@@ -17,7 +17,7 @@ public class Reagent {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "LOCATION_ID")
-    private Location location;
+    private ReagentLocation reagentLocation;
 
     @Column(name="RECEIPT_DATE")
     private Date receiptDate;
@@ -50,12 +50,12 @@ public class Reagent {
         this.compound = compound;
     }
 
-    public Location getLocation() {
-        return location;
+    public ReagentLocation getReagentLocation() {
+        return reagentLocation;
     }
 
-    public void setLocation(Location location) {
-        this.location = location;
+    public void setReagentLocation(ReagentLocation reagentLocation) {
+        this.reagentLocation = reagentLocation;
     }
 
     public Date getReceiptDate() {
@@ -104,7 +104,7 @@ public class Reagent {
         if (o == null || getClass() != o.getClass()) return false;
         Reagent reagent = (Reagent) o;
         return Objects.equals(compound, reagent.compound) &&
-                Objects.equals(location, reagent.location) &&
+                Objects.equals(reagentLocation, reagent.reagentLocation) &&
                 Objects.equals(receiptDate, reagent.receiptDate) &&
                 Objects.equals(storageLife, reagent.storageLife) &&
                 Objects.equals(comments, reagent.comments) &&
@@ -115,6 +115,6 @@ public class Reagent {
     @Override
     public int hashCode() {
 
-        return Objects.hash(compound, location, receiptDate, storageLife, comments, measurementUnits, amount);
+        return Objects.hash(compound, reagentLocation, receiptDate, storageLife, comments, measurementUnits, amount);
     }
 }

@@ -1,20 +1,16 @@
 package com.naiden.digitallab.controller;
 
-import com.naiden.digitallab.model.Compound;
 import com.naiden.digitallab.model.Reagent;
 import com.naiden.digitallab.repository.CompoundRepository;
-import com.naiden.digitallab.repository.LocationRepository;
+import com.naiden.digitallab.repository.ReagentLocationRepository;
 import com.naiden.digitallab.repository.ReagentRepository;
-import com.naiden.digitallab.service.ReagentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.sql.Date;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,7 +25,7 @@ public class ReagentController {
     private CompoundRepository compoundRepository;
 
     @Autowired
-    private LocationRepository locationRepository;
+    private ReagentLocationRepository reagentLocationRepository;
 
     // FIXME: temporary disabled
 //    @GetMapping(path = "/api/add-reagent")
@@ -73,7 +69,7 @@ public class ReagentController {
         Map<String, Object> model = new HashMap<>();
         model.put("reagent", new Reagent());
         model.put("compounds", compoundRepository.findAll());
-        model.put("locations", locationRepository.findAll());
+        model.put("locations", reagentLocationRepository.findAll());
         return new ModelAndView("add-reagent", model);
     }
 

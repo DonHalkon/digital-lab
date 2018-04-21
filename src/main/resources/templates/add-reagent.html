@@ -62,11 +62,11 @@
             <div class="form-group">
                 <label class="col-sm-2 control-label">Location: </label>
                 <div class="col-sm-3">
-                    <select th:field="*{location}" class="form-control">
-                        <option value="-1">Select a location</option>
-                        <option th:each="location : ${locations}"
-                                th:value="${location.id}"
-                                th:text="${location.descr}">${location.descr}
+                    <select th:field="*{reagentLocation}" class="form-control">
+                        <option value="-1">Select a reagentLocation</option>
+                        <option th:each="reagentLocation : ${locations}"
+                                th:value="${reagentLocation.id}"
+                                th:text="${reagentLocation.descr}">${reagentLocation.descr}
                         </option>
                     </select>
                 </div>
