@@ -6,12 +6,10 @@ import com.naiden.digitallab.repository.ReagentLocationRepository;
 import com.naiden.digitallab.repository.ReagentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -57,7 +55,7 @@ public class ReagentController {
 //        return reagentRepository.findAll();
 //    }
 
-    @RequestMapping(value = {"/view-reagents"})
+    @GetMapping(value = {"/view-reagents"})
     public String main(Map<String, Object> model) {
         Iterable<Reagent> reagents = reagentRepository.findAll();
         model.put("reagents", reagents);
@@ -65,17 +63,16 @@ public class ReagentController {
     }
 
     @RequestMapping("/add-reagent")
-    public ModelAndView addNewReagent() {
-        Map<String, Object> model = new HashMap<>();
+    public String addNewReagent(Map<String, Object> model) {
         model.put("reagent", new Reagent());
         model.put("compounds", compoundRepository.findAll());
-        model.put("locations", reagentLocationRepository.findAll());
-        return new ModelAndView("add-reagent", model);
+        model.put("reagentlocations", reagentLocationRepository.findAll());
+        return "add-reagent";
     }
 
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveNewReagent(@ModelAttribute("command") Reagent reagent) {
+    @PostMapping(value = "/save")
+    public String saveNewReagent(Reagent reagent) {
         reagentRepository.save(reagent);
         return "redirect:view-reagents";
     }

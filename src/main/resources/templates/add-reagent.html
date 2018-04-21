@@ -15,7 +15,7 @@
     <center>
         <form method="POST" action="save" th:object="${reagent}" class="form-horizontal">
             <div class="form-group">
-                <label class="col-sm-2 control-label">Receipt Date: </label>
+                <label class="col-sm-2 control-label">Receipt Date:</label>
                 <div class="col-sm-3">
                     <input th:field="*{receiptDate}"
                            type="date"
@@ -58,13 +58,12 @@
 
             </div>
 
-
             <div class="form-group">
                 <label class="col-sm-2 control-label">Location: </label>
                 <div class="col-sm-3">
                     <select th:field="*{reagentLocation}" class="form-control">
                         <option value="-1">Select a reagentLocation</option>
-                        <option th:each="reagentLocation : ${locations}"
+                        <option th:each="reagentLocation : ${reagentlocations}"
                                 th:value="${reagentLocation.id}"
                                 th:text="${reagentLocation.descr}">${reagentLocation.descr}
                         </option>
