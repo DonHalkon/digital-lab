@@ -16,7 +16,7 @@ public class CompoundService {
     }
 
     public Compound findById(Long id) {
-        return compoundRepository.findOne(id);
+        return compoundRepository.findById(id).orElse(new Compound());
     }
 
     public Compound save(Compound compound) {
@@ -26,7 +26,7 @@ public class CompoundService {
     }
 
     public void deleteById(Long aLong) {
-        compoundRepository.delete(aLong);
+        compoundRepository.deleteById(aLong);
     }
 
     public void update(Compound compound) {

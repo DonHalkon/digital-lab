@@ -16,7 +16,7 @@ public class ReagentService {
     }
 
     public Reagent findById(Long id){
-        return reagentRepository.findOne(id);
+        return reagentRepository.findById(id).get();
     }
 
     public Reagent save(Reagent reagent){
