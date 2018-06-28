@@ -44,3 +44,5 @@ gradle buildDocker
 cd docker
 docker-compose up
 ```
+### credentials
+Now only one user exists. Username: user, Password: password
