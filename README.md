@@ -18,7 +18,7 @@ But now it is only the plans for future)).
 ## Build from source ##
 1. Download [jsme](http://peter-ertl.com/jsme/)
 2. Unzip 
-3. Move jsme directory to src/main/resources/js/ 
+3. Move jsme/jsme directory to src/main/resources/js/ 
 4. Build:
 ```bash
 gradle clean build
@@ -44,5 +44,5 @@ gradle buildDocker
 cd docker
 docker-compose up
 ```
-### credentials
+### Credentials
 Now only one user exists. Username: user, Password: password
