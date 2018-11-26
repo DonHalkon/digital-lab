@@ -14,25 +14,33 @@ import java.util.Map;
 @RequestMapping(path = "/reagentlocations")
 public class ReagentLocationController {
 
-    @Autowired
-    private ReagentLocationRepository reagentLocationRepository;
+    private final String ADD_REAGENTLOCATION = "add-reagentlocation";
 
-    @RequestMapping("/add-reagentlocation")
+    private final String VIEW_REAGENTLOCATIONS = "view-reagentlocations";
+
+    private final ReagentLocationRepository reagentLocationRepository;
+
+    @Autowired
+    public ReagentLocationController(ReagentLocationRepository reagentLocationRepository) {
+        this.reagentLocationRepository = reagentLocationRepository;
+    }
+
+    @RequestMapping(ADD_REAGENTLOCATION)
     public String addNewReagentLocation(Model model) {
         model.addAttribute("location", new ReagentLocation());
-        return "add-reagentlocation";
+        return ADD_REAGENTLOCATION;
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveReagentNewLocation(ReagentLocation reagentLocation) {
         reagentLocationRepository.save(reagentLocation);
-        return "redirect:/reagentlocations/view-reagentlocations";
+        return "redirect:" + VIEW_REAGENTLOCATIONS;
     }
 
-    @RequestMapping("/view-reagentlocations")
+    @RequestMapping(VIEW_REAGENTLOCATIONS)
     public String viewAllLocations(Map<String, Object> model) {
         Iterable<ReagentLocation> locations = reagentLocationRepository.findAll();
         model.put("locations", locations);
-        return "view-reagentlocations";
+        return VIEW_REAGENTLOCATIONS;
     }
 }

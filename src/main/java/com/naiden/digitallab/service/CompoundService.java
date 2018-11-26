@@ -8,8 +8,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class CompoundService {
 
+    private final CompoundRepository compoundRepository;
+
     @Autowired
-    private CompoundRepository compoundRepository;
+    public CompoundService(CompoundRepository compoundRepository) {
+        this.compoundRepository = compoundRepository;
+    }
 
     public Iterable<Compound> findAll() {
         return compoundRepository.findAll();

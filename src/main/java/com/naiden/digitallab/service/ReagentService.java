@@ -8,8 +8,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReagentService {
 
+    private final ReagentRepository reagentRepository;
+
     @Autowired
-    private ReagentRepository reagentRepository;
+    public ReagentService(ReagentRepository reagentRepository) {
+        this.reagentRepository = reagentRepository;
+    }
 
     public Object findAll(){
         return reagentRepository.findAll();

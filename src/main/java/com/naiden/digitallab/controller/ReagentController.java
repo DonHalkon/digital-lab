@@ -16,65 +16,42 @@ import java.util.Map;
 @RequestMapping(path = "/reagents")
 public class ReagentController {
 
-    @Autowired
-    private ReagentRepository reagentRepository;
+    private final String VIEW_REAGENTS = "view-reagents";
+
+    private final String ADD_REAGENT = "add-reagent";
+
+    private final ReagentRepository reagentRepository;
+
+    private final CompoundRepository compoundRepository;
+
+    private final ReagentLocationRepository reagentLocationRepository;
 
     @Autowired
-    private CompoundRepository compoundRepository;
+    public ReagentController(ReagentRepository reagentRepository, CompoundRepository compoundRepository, ReagentLocationRepository reagentLocationRepository) {
+        this.reagentRepository = reagentRepository;
+        this.compoundRepository = compoundRepository;
+        this.reagentLocationRepository = reagentLocationRepository;
+    }
 
-    @Autowired
-    private ReagentLocationRepository reagentLocationRepository;
-
-    // FIXME: temporary disabled
-//    @GetMapping(path = "/api/add-reagent")
-//    public @ResponseBody
-//    String addNewReagentApi(@RequestParam String comments, @RequestParam Long compoundId) {
-//        Reagent reagent = new Reagent();
-//        reagent.setComments(comments);
-//        reagent.setReceiptDate(new Date(Calendar.getInstance().getTime().getTime()));
-//        reagent.setCompound(compoundRepository.findOne(compoundId));
-//        reagentRepository.save(reagent);
-//        return "Reagent Saved";
-//    }
-
-    // FIXME: temporary disabled
-//    @GetMapping(path = "/api/add-compound")
-//    public @ResponseBody
-//    String addNewCompound(@RequestParam String cas, @RequestParam String name) {
-//        Compound compound = new Compound();
-//        compound.setCas(cas);
-//        compound.setName(name);
-//        compoundRepository.save(compound);
-//        return "Compound Saved";
-//    }
-
-    // TODO: uncomment when needed
-//    @GetMapping(path = "/api/get-all")
-//    public @ResponseBody
-//    Iterable<Reagent> getAllReagents() {
-//        return reagentRepository.findAll();
-//    }
-
-    @GetMapping(value = {"/view-reagents"})
+    @GetMapping(VIEW_REAGENTS)
     public String main(Map<String, Object> model) {
         Iterable<Reagent> reagents = reagentRepository.findAll();
         model.put("reagents", reagents);
-        return "view-reagents";
+        return VIEW_REAGENTS;
     }
 
-    @RequestMapping("/add-reagent")
+    @RequestMapping(ADD_REAGENT)
     public String addNewReagent(Map<String, Object> model) {
         model.put("reagent", new Reagent());
         model.put("compounds", compoundRepository.findAll());
         model.put("reagentlocations", reagentLocationRepository.findAll());
-        return "add-reagent";
+        return ADD_REAGENT;
     }
-
 
     @PostMapping(value = "/save")
     public String saveNewReagent(Reagent reagent) {
         reagentRepository.save(reagent);
-        return "redirect:view-reagents";
+        return "redirect:" + VIEW_REAGENTS;
     }
 
 }

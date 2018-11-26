@@ -21,33 +21,41 @@ import java.util.Map;
 @RequestMapping(path = "/compounds")
 public class CompoundController {
 
-    @Autowired
-    private CompoundService compoundService;
+    private final String EDIT_COMPOUND = "edit-compound";
 
-    @GetMapping("/view-compounds")
+    private final String VIEW_COMPOUNDS = "view-compounds";
+
+    private final CompoundService compoundService;
+
+    @Autowired
+    public CompoundController(CompoundService compoundService) {
+        this.compoundService = compoundService;
+    }
+
+    @GetMapping(VIEW_COMPOUNDS)
     public String viewAllCompounds(Map<String, Object> model) {
         model.put("compounds", compoundService.findAll());
-        return "view-compounds";
+        return VIEW_COMPOUNDS;
     }
 
-    @GetMapping("/add-new-compound")
+    @GetMapping("add-new-compound")
     public String addNewCompound(Model model) {
         model.addAttribute("compound", new Compound());
-        return "edit-compound";
+        return EDIT_COMPOUND;
     }
 
-    @GetMapping("/edit-compound")
+    @GetMapping(EDIT_COMPOUND)
     public String editCompound() {
-        return "edit-compound";
+        return EDIT_COMPOUND;
     }
 
-    @GetMapping("/edit-compound/{id}")
+    @GetMapping(EDIT_COMPOUND + "/{id}")
     public String editCompoundById(@PathVariable Long id, Model model) {
         model.addAttribute("compound", compoundService.findById(id));
-        return "edit-compound";
+        return EDIT_COMPOUND;
     }
 
-    @PostMapping(value = "/edit-compound")
+    @PostMapping(EDIT_COMPOUND)
     public String editCompound(@Valid Compound compound, Errors errors, RedirectAttributes attributes) {
         String messageColor = "alert-success";
         String message = "Saved!";
@@ -58,7 +66,7 @@ public class CompoundController {
                 attributes.addFlashAttribute(compound);
                 attributes.addFlashAttribute("message", "Can't save compound. Probably compound with the same name/CID/structure exists in DB!");
                 attributes.addFlashAttribute("messageColor", "alert-danger");
-                return "redirect:edit-compound";
+                return "redirect:" + EDIT_COMPOUND;
             }
         } else {
             message = errors.getFieldErrors()
@@ -68,13 +76,13 @@ public class CompoundController {
         }
         attributes.addFlashAttribute("message", message);
         attributes.addFlashAttribute("messageColor", messageColor);
-        if (compound.getId() != null) return "redirect:view-compounds";
+        if (compound.getId() != null) return "redirect:" + VIEW_COMPOUNDS;
         return "redirect:/compounds/add-new-compound";
     }
 
-    @GetMapping(value = "/delete/{id}")
+    @GetMapping(value = "delete/{id}")
     public String deleteById(@PathVariable Long id) {
         compoundService.deleteById(id);
-        return "redirect:/compounds/view-compounds";
+        return "redirect:/compounds/" + VIEW_COMPOUNDS;
     }
 }
